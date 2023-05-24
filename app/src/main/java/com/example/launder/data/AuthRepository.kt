@@ -1,6 +1,5 @@
-package com.example.launder
+package com.example.launder.data
 
-import com.example.launder.utils.Resource
 import com.google.firebase.auth.FirebaseUser
 
 interface AuthRepository {
@@ -8,4 +7,5 @@ interface AuthRepository {
     suspend fun login(email: String, password: String): Resource<FirebaseUser>
     suspend fun signup(name: String, email: String, password: String): Resource<FirebaseUser>
     fun logout()
+    fun add()
 }
