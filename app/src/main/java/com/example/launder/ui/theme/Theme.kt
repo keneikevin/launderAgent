@@ -1,4 +1,4 @@
-package com.example.agent.ui.theme
+package com.example.launder.ui.theme
 
 import android.app.Activity
 import android.os.Build

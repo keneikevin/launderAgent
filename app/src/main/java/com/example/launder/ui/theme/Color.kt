@@ -1,4 +1,4 @@
-package com.example.agent.ui.theme
+package com.example.launder.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
