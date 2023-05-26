@@ -14,8 +14,8 @@
         />
     <item
         android:id="@+id/mapFragment"
-        android:title="Map"
-        android:icon="@drawable/map"
+        android:title="Chat"
+        android:icon="@drawable/chat"
         />
     <item
         android:id="@+id/profileFragment"
