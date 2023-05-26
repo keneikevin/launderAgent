@@ -1,5 +1,6 @@
 package com.example.launder.ui.auth
 
+import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.widget.Toast
@@ -24,6 +25,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.agent.R
+import com.example.launder.HomeActivity
 import com.example.launder.data.Resource
 import com.example.launder.navigation.ROUTE_HOME
 import com.example.launder.navigation.ROUTE_LOGIN
@@ -36,6 +38,7 @@ import com.example.launder.ui.theme.spacing
 fun LoginScreen(viewModel: AuthViewModel?, navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    val context = LocalContext.current
     //val vm = UserState.current
     val loginFlow = viewModel?.loginFlow?.collectAsState()
 
@@ -154,9 +157,11 @@ fun LoginScreen(viewModel: AuthViewModel?, navController: NavController) {
                 }
                 is Resource.Success -> {
                     LaunchedEffect(Unit) {
-                        navController.navigate(ROUTE_HOME) {
-                            popUpTo(ROUTE_LOGIN) { inclusive = true }
-                        }
+                        context.startActivity(Intent(context, HomeActivity::class.java))
+
+//                        navController.navigate(ROUTE_HOME) {
+//                            popUpTo(ROUTE_LOGIN) { inclusive = true }
+//                        }
                     }
                 }
             }

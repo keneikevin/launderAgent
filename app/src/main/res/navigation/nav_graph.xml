@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graqph"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.launder.ui.home.fragment.HomeFragment"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.launder.ui.home.fragment.ProfileFragment"
+        android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/shoppingFragment"
+        android:name="com.example.launder.ui.home.fragment.ShoppingFragment"
+        android:label="ShoppingFragment" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.launder.ui.home.fragment.MapFragment"
+        android:label="MapFragment" />
+</navigation>

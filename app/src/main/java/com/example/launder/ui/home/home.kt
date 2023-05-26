@@ -1,5 +1,6 @@
 package com.example.launder.ui.home
 
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,9 +28,11 @@ import com.example.launder.navigation.ROUTE_LOGIN
 import com.example.launder.ui.auth.AuthViewModel
 import com.example.launder.ui.theme.AppTheme
 import com.example.launder.ui.theme.spacing
+import com.example.launder.HomeActivity
 
 @Composable
 fun HomeScreen(viewModel: AuthViewModel?, navController: NavHostController) {
+    val context = LocalContext.current
     val spacing = MaterialTheme.spacing
     Column(
         modifier = Modifier
@@ -118,7 +122,8 @@ fun HomeScreen(viewModel: AuthViewModel?, navController: NavHostController) {
             }
             Button(
                 onClick = {
-                    viewModel?.add()
+                   // viewModel?.add()
+                    context.startActivity(Intent(context, HomeActivity::class.java))
 //                    navController.navigate(ROUTE_LOGIN) {
 //                        popUpTo(ROUTE_HOME) { inclusive = true }
 //                    }
