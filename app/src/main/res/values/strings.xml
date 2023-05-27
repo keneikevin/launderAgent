@@ -7,8 +7,16 @@
     <string name="name">name</string>
     <string name="signup">signup</string>
     <string name="already_have_account">Already have an account?\nClick here to login</string>
-    <string name="welcome_back">Welcome Back</string>
+    <string name="welcome_back">Welcome </string>
     <string name="empty" />
+    <string name="title_activity_maps">Map Current Location</string>
     <string name="logout">logout</string>
     <string name="add">add</string>
+    <string name="phone">phone</string>
+    <string name="post">Post</string>
+    <string name="choose_image">Choose image</string>
+    <string name="service">Service</string>
+    <string name="error_no_image_chosen">no image chosen</string>
+    <string name="error_unknown">unknown Error</string>
+    <string name="google_map_key">AIzaSyDJTW2gR4O46ry50dB5FF1_f7JqGsPz0eI</string>
 </resources>

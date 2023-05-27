@@ -8,37 +8,16 @@
     tools:context="com.example.launder.HomeActivity">
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="366dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="170dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:id="@+id/textView"
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_weight="0.75"
-            android:text="Do you have not an account?"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textViewRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Register"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

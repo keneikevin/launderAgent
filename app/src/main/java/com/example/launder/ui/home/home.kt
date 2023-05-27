@@ -3,6 +3,7 @@ package com.example.launder.ui.home
 import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,19 +23,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.agent.R
-import com.example.launder.navigation.ROUTE_HOME
-import com.example.launder.navigation.ROUTE_LOGIN
+import com.example.launder.MainActivity
 import com.example.launder.ui.auth.AuthViewModel
 import com.example.launder.ui.theme.AppTheme
 import com.example.launder.ui.theme.spacing
-import com.example.launder.HomeActivity
 
 @Composable
-fun HomeScreen(viewModel: AuthViewModel?, navController: NavHostController) {
+fun HomeScreen(viewModel: AuthViewModel?,navController: NavHostController) {
     val context = LocalContext.current
     val spacing = MaterialTheme.spacing
+
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -42,11 +43,10 @@ fun HomeScreen(viewModel: AuthViewModel?, navController: NavHostController) {
             .padding(top = spacing.extraLarge),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        Text(
-            text = stringResource(id = R.string.welcome_back),
-            style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.onSurface
+        Icon(
+            painter = painterResource(id = R.drawable.edit),
+            contentDescription = stringResource(id = R.string.empty),
+            modifier = Modifier.padding(bottom = spacing.extraLarge)
         )
 
         Text(
@@ -55,10 +55,16 @@ fun HomeScreen(viewModel: AuthViewModel?, navController: NavHostController) {
             color = MaterialTheme.colorScheme.onSurface
         )
 
+
         Image(
             painter = painterResource(id = R.drawable.ic_person),
             contentDescription = stringResource(id = R.string.empty),
-            modifier = Modifier.size(128.dp)
+            modifier = Modifier.size(128.dp).clickable {
+
+//                navController.navigate(ROUTE_LOGIN) {
+//                    popUpTo(ROUTE_SIGNUP) { inclusive = true }
+//                }
+            }
         )
 
         Column(
@@ -106,34 +112,36 @@ fun HomeScreen(viewModel: AuthViewModel?, navController: NavHostController) {
                     color = MaterialTheme.colorScheme.onSurface
                 )
             }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+            ) {
+                Text(
+                    text = stringResource(id = R.string.phone),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.weight(0.3f),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+
+                Text(
+                    text = "+254719631690",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.weight(0.7f),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
 
             Button(
                 onClick = {
                     viewModel?.logout()
-                    navController.navigate(ROUTE_LOGIN) {
-                        popUpTo(ROUTE_HOME) { inclusive = true }
-                    }
+                    context.startActivity(Intent(context, MainActivity::class.java))
                 },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = spacing.extraLarge)
             ) {
                 Text(text = stringResource(id = R.string.logout))
-            }
-            Button(
-                onClick = {
-                   // viewModel?.add()
-                    context.startActivity(Intent(context, HomeActivity::class.java))
-//                    navController.navigate(ROUTE_LOGIN) {
-//                        popUpTo(ROUTE_HOME) { inclusive = true }
-//                    }
-                },
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = spacing.extraLarge)
-            ) {
-                Text(text = stringResource(id = R.string.add
-                ))
             }
         }
     }
@@ -143,7 +151,7 @@ fun HomeScreen(viewModel: AuthViewModel?, navController: NavHostController) {
 @Composable
 fun HomeScreenPreviewLight() {
     AppTheme {
-        HomeScreen(null, rememberNavController())
+     //   HomeScreen(null, rememberNavController())
     }
 }
 
@@ -151,6 +159,6 @@ fun HomeScreenPreviewLight() {
 @Composable
 fun HomeScreenPreviewDark() {
     AppTheme {
-        HomeScreen(null, rememberNavController())
+     //   HomeScreen(null, rememberNavController())
     }
 }

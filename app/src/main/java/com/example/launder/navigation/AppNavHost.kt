@@ -29,7 +29,7 @@ fun AppNavHost(
             SignupScreen(viewModel, navController)
         }
         composable(ROUTE_HOME) {
-            HomeScreen(viewModel, navController)
+            HomeScreen(viewModel,navController)
         }
     }
 }

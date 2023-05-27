@@ -6,25 +6,14 @@
     android:layout_height="match_parent"
     tools:context="com.example.launder.HomeActivity">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/big_image"
-        android:layout_width="340dp"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
-        android:layout_height="340dp"
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/composeView"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/a" />
-
-    <TextView
-        android:id="@+id/etShoppingItemName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BLACK FOREST"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/big_image"
-        app:layout_constraintStart_toStartOf="@+id/big_image"
-        app:layout_constraintTop_toBottomOf="@+id/big_image" />
+        app:layout_constraintBottom_toTopOf="@id/imageView7"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btnAddShoppingItem"
@@ -32,7 +21,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
-        android:text="ORDER"
+        android:text="@string/logout"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView7"
@@ -55,14 +44,5 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="1800" />
-
-    <TextView
-        android:id="@+id/etItemPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Order your cake and get it in 12hrs."
-        app:layout_constraintEnd_toEndOf="@+id/big_image"
-        app:layout_constraintStart_toStartOf="@+id/big_image"
-        app:layout_constraintTop_toTopOf="@+id/big_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

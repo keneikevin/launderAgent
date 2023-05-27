@@ -4,7 +4,7 @@
    >
     <item
         android:id="@+id/homeFragment"
-        android:title="Home"
+        android:title="Services"
         android:icon="@drawable/home"
         />
     <item
@@ -14,8 +14,8 @@
         />
     <item
         android:id="@+id/mapFragment"
-        android:title="Chat"
-        android:icon="@drawable/chat"
+        android:title="Map"
+        android:icon="@drawable/map"
         />
     <item
         android:id="@+id/profileFragment"
