@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graqph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/mapFragment">
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.launder.ui.home.fragment.HomeFragment"

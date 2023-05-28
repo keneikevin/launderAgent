@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
    >
     <item
+        android:id="@+id/mapFragment"
+        android:title="Map"
+        android:icon="@drawable/map"
+        />
+    <item
         android:id="@+id/homeFragment"
         android:title="Services"
         android:icon="@drawable/home"
@@ -12,11 +17,7 @@
         android:title="Orders"
         android:icon="@drawable/order"
         />
-    <item
-        android:id="@+id/mapFragment"
-        android:title="Map"
-        android:icon="@drawable/map"
-        />
+
     <item
         android:id="@+id/profileFragment"
         android:title="Profile"
