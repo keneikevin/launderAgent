@@ -21,4 +21,6 @@
     <string name="google_map_key">AIzaSyDJTW2gR4O46ry50dB5FF1_f7JqGsPz0eI</string>
     <string name="cake">Service</string>
     <string name="save">Save</string>
+    <string name="error_username_too_short">user name too short</string>
+    <string name="error_input_empty">input empty</string>
 </resources>

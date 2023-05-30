@@ -12,6 +12,7 @@ import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.agent.R
 import com.example.agent.databinding.FragmentCreateBinding
 import com.example.launder.ui.home.snackbar
@@ -53,10 +54,10 @@ class CreateServiceFragment : Fragment(R.layout.fragment_create) {
                 pickImageFromGallery()
             }
         }
-        val stringArray = arrayOf("Kg","Item","Pair")
+        val stringArray = arrayOf("Item","Kg","Pair")
         binding.picker.displayedValues = stringArray
        val numberPicker = binding.picker
-        numberPicker.value = 1
+        numberPicker.value = 2
         numberPicker.minValue = 0
         numberPicker.maxValue = stringArray.size - 1
         numberPicker.displayedValues = stringArray
@@ -71,6 +72,7 @@ class CreateServiceFragment : Fragment(R.layout.fragment_create) {
             curImageUri?.let { uri ->
                 viewModel.createPost(uri, binding.etCakeName.text.toString(),binding.etPriceName.text.toString(),stringArray[numberPicker.value])
             } ?: snackbar(getString(R.string.error_no_image_chosen))
+            findNavController().navigate(R.id.action_createServiceFragment_to_homeFragment)
         }
     }
     private fun pickImageFromGallery() {

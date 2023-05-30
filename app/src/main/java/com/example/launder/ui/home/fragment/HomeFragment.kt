@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,9 +31,13 @@ class HomeFragment :Fragment(R.layout.fragment_home){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+
         viewModel = ViewModelProvider(requireActivity()).get(CreateServiceViewModel::class.java)
         binding = FragmentHomeBinding.bind(view)
         setUpRecyclerView()
+        binding.fab.setOnClickListener {
+         findNavController().navigate(R.id.action_homeFragment_to_createServiceFragment)
+        }
     }
 
     private fun setUpRecyclerView()= binding.rvCakes.apply{

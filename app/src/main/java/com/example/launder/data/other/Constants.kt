@@ -20,7 +20,9 @@ object Constants {
      val POLYLINE_COLOR = Color.Black
     const val POLYLINE_WIDTH = 8f
     const val MAP_ZOOM = 15f
-
+    const val DEFAULT_PROFILE_PICTURE = "https://firebasestorage.googleapis.com/v0/b/kenyaeducationfund-dd541.appspot.com/o/img_avatar.png?alt=media&token=45c42fd6-53f4-4f16-a433-eb7203d34f3b"
+    const val MIN_USER_NAME = 3
+    const val MAX_USER_NAME = 8
     const val NOTIFICATION_CHANNEL_ID = "tracking_channel"
     const val NOTIFICATION_CHANNEL_NAME = "Tracking"
     const val NOTIFICATION_ID = 1

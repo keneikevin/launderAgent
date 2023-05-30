@@ -2,11 +2,17 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graqph"
-    app:startDestination="@id/createServiceFragment">
+    app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.launder.ui.home.fragment.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_createServiceFragment"
+            app:destination="@id/createServiceFragment"
+            app:popUpTo="@id/homeFragment"
+             />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.launder.ui.home.fragment.ProfileFragment"
@@ -22,7 +28,11 @@
     <fragment
         android:id="@+id/createServiceFragment"
         android:name="com.example.launder.ui.home.fragment.CreateServiceFragment"
-        android:label="CreateServiceFragment" />
+        android:label="CreateServiceFragment" >
+        <action
+            android:id="@+id/action_createServiceFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.launder.ui.home.fragment.EditProfileFragment"

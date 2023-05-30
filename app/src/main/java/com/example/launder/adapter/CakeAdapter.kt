@@ -19,6 +19,7 @@ class CakeAdapter @Inject constructor(
         binding.root){
         val tvTitle= binding.textName
         val tvPrice= binding.textPrice
+        val tvPer= binding.per
         val ivCake = binding.img
     }
     companion object : DiffUtil.ItemCallback<Cake>() {
@@ -45,9 +46,10 @@ class CakeAdapter @Inject constructor(
 
 
 
-            tvTitle.text = cake.per
+            tvTitle.text = cake.title
             val sizePice = "Ksh: ${cake.price} "
             tvPrice.text = sizePice
+            tvPer.text = cake.per
 
 
         }

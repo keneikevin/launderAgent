@@ -8,11 +8,7 @@
         android:title="Services"
         android:icon="@drawable/home"
         />
-    <item
-        android:id="@+id/createServiceFragment"
-        android:title="Orders"
-        android:icon="@drawable/order"
-        />
+
     <item
         android:id="@+id/mapFragment"
         android:title="Map"

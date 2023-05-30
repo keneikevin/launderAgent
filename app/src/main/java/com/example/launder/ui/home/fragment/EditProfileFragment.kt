@@ -5,31 +5,36 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.agent.R
-import com.example.agent.databinding.FragmentCreateBinding
 import com.example.agent.databinding.FragmentEditprofileBinding
 import com.example.launder.MainActivity
 import com.example.launder.ui.auth.AuthViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import dagger.hilt.android.AndroidEntryPoint
+//import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class EditProfileFragment : Fragment(R.layout.fragment_editprofile) {
     private lateinit var binding: FragmentEditprofileBinding
 
-
+    lateinit var auth: FirebaseAuth
     private val viewModel:AuthViewModel by viewModels()
 
 
-    private var curImageUri: Uri? = null
+    private var cuImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +45,18 @@ class EditProfileFragment : Fragment(R.layout.fragment_editprofile) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentEditprofileBinding.bind(view)
         //   subscribeToObservers()
+        auth = FirebaseAuth.getInstance()
 
-
+        auth.currentUser?.let {
+            binding.ivPostImage.setImageURI(it.photoUrl)
+            binding.etCakeName.setText(it.displayName)
+            binding.etPriceName.setText(it.email)
+            binding.etPriceN.setText(it.phoneNumber)
+        }
+       // binding.ivPostImage.setImageURI(cuImageUri)
+        binding.btnPost.setOnClickListener {
+            updateProfile()
+        }
         binding.btnLogout.setOnClickListener {
             viewModel.logout()
             val intent = Intent(requireActivity(), MainActivity::class.java)
@@ -62,12 +77,40 @@ class EditProfileFragment : Fragment(R.layout.fragment_editprofile) {
             }
         }
     }
+
+    private fun updateProfile() {
+        val user = auth.currentUser
+        user?.let { user ->
+            val username = binding.etCakeName.text.toString()
+            val photoURI = cuImageUri
+            val profileUpdates = UserProfileChangeRequest.Builder()
+                .setDisplayName(username)
+                .setPhotoUri(photoURI)
+                .build()
+
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    user.updateProfile(profileUpdates).await()
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(requireContext(), "Successfully updated profile",
+                            Toast.LENGTH_LONG).show()
+                    }
+                } catch(e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
+                    }
+                }
+
+            }
+        }
+    }
     private fun pickImageFromGallery() {
         //Intent to pick image
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, IMAGE_PICK_CODE)
     }
+
 
     companion object {
         //image pick code
@@ -99,8 +142,9 @@ class EditProfileFragment : Fragment(R.layout.fragment_editprofile) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
             binding.ivPostImage.setImageURI(data?.data)
-        }
-    }
+            cuImageUri = data?.data
+      //      data?.data?.let { viewModel.setCurImageUri(it) }
+    }}
 }
 
 

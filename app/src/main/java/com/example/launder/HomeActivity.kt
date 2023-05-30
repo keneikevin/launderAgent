@@ -18,10 +18,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private val viewModel by viewModels<AuthViewModel>()
-    override fun onBackPressed() {
-        super.onBackPressed()
-        moveTaskToBack(true)
-    }
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//        moveTaskToBack(true)
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +35,7 @@ class HomeActivity : AppCompatActivity() {
         navHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
-                    R.id.homeFragment,R.id.createServiceFragment,R.id.editProfileFragment, R.id.mapFragment ->
+                    R.id.homeFragment,R.id.editProfileFragment, R.id.mapFragment ->
                         binding.bottomNavigationView.visibility = View.VISIBLE
                     else -> binding.bottomNavigationView.visibility = View.GONE
                 }

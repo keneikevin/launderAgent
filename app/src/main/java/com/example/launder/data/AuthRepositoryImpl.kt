@@ -4,6 +4,9 @@ import android.content.ContentValues.TAG
 import android.net.Uri
 import android.util.Log
 import com.example.launder.data.entities.Cake
+import com.example.launder.data.entities.ProfileUpdate
+import com.example.launder.data.entities.User
+import com.example.launder.data.other.Constants.DEFAULT_PROFILE_PICTURE
 import com.example.launder.data.other.Constants.SERVICE_COLLECTION
 import com.example.launder.data.other.safeCall
 import com.google.android.gms.tasks.OnFailureListener
@@ -30,6 +33,7 @@ class AuthRepositoryImpl @Inject constructor(
     private val storage = Firebase.storage
     private val cakes = firestore.collection(SERVICE_COLLECTION)
 
+    private val users = firestore.collection("users")
 
     override val currentUser: FirebaseUser?
         get() = firebaseAuth.currentUser
@@ -59,6 +63,43 @@ class AuthRepositoryImpl @Inject constructor(
             )
             cakes.document(postId).set(post).await()
             Resouce.success(Any())
+        }
+    }
+    override suspend fun updateProfilePicture(uid: String, imageUri: Uri) =
+        withContext(Dispatchers.IO) {
+            val storageRef = storage.getReference(uid)
+            val user = getUser(uid).data!!
+            if (user.profilePictureUrl != DEFAULT_PROFILE_PICTURE) {
+                storage.getReferenceFromUrl(user.profilePictureUrl).delete().await()
+            }
+            storageRef.putFile(imageUri).await().metadata?.reference?.downloadUrl?.await()
+        }
+
+    override suspend fun updateProfile(profileUpdate: ProfileUpdate) = withContext(Dispatchers.IO) {
+        safeCall {
+            val imageUrl = profileUpdate.profilePictureUri?.let { uri ->
+                updateProfilePicture(profileUpdate.uidToUpdate, uri).toString()
+            }
+            val map = mutableMapOf(
+                "username" to profileUpdate.username,
+                "description" to profileUpdate.description
+            )
+            imageUrl?.let { url ->
+                map["profilePictureUrl"] = url
+            }
+            users.document(profileUpdate.uidToUpdate).update(map.toMap()).await()
+            Resouce.success(Any())
+        }
+    }
+    override suspend fun getUser(uid: String) = withContext(Dispatchers.IO) {
+        safeCall {
+            val user = users.document(uid).get().await().toObject(User::class.java)
+                ?: throw IllegalStateException()
+            val currentUid = FirebaseAuth.getInstance().uid!!
+            val currentUser = users.document(currentUid).get().await().toObject(User::class.java)
+                ?: throw IllegalStateException()
+            user.isFollowing = uid in currentUser.follows
+            Resouce.success(user)
         }
     }
 

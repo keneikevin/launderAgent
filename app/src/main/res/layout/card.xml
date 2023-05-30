@@ -16,11 +16,39 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:paddingStart="6dp"
         android:paddingTop="6dp"
         android:paddingEnd="6dp"
-        android:paddingBottom="6dp"
-        android:orientation="vertical">
+        android:paddingBottom="6dp">
+
+        <TextView
+            android:id="@+id/per"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/img"
+            android:layout_marginStart="8dp"
+            android:layout_toRightOf="@+id/img"
+            android:text="per"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            card_view:layout_constraintBottom_toBottomOf="@+id/per2"
+            card_view:layout_constraintStart_toEndOf="@+id/per2"
+            card_view:layout_constraintTop_toTopOf="@+id/per2" />
+
+        <TextView
+            android:id="@+id/per2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/img"
+            android:layout_marginStart="8dp"
+            android:layout_toRightOf="@+id/img"
+            android:text="per"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            card_view:layout_constraintBottom_toBottomOf="@+id/textPrice"
+            card_view:layout_constraintStart_toEndOf="@+id/textPrice"
+            card_view:layout_constraintTop_toTopOf="@+id/textPrice" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/img"
@@ -36,12 +64,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/img"
-            android:layout_marginStart="5dp"
             android:layout_marginTop="24dp"
             android:layout_toRightOf="@+id/img"
             android:text="Title"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
+            card_view:layout_constraintBottom_toTopOf="@+id/textPrice"
+            card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toEndOf="@+id/img"
             card_view:layout_constraintTop_toTopOf="@+id/img" />
 
@@ -55,6 +85,7 @@
             android:layout_toRightOf="@+id/img"
             android:fontFamily="@font/poppins_black"
             android:textSize="18sp"
+            android:textStyle="normal"
             card_view:layout_constraintBottom_toBottomOf="@+id/img"
             card_view:layout_constraintStart_toEndOf="@+id/img"
             tools:text="1800" />
