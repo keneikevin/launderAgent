@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.agent.R
 import com.example.launder.MainActivity
+import com.example.launder.navigation.ROUTE_LOGIN
+import com.example.launder.navigation.ROUTE_SIGNUP
 import com.example.launder.ui.auth.AuthViewModel
 import com.example.launder.ui.theme.AppTheme
 import com.example.launder.ui.theme.spacing
@@ -61,9 +63,9 @@ fun HomeScreen(viewModel: AuthViewModel?,navController: NavHostController) {
             contentDescription = stringResource(id = R.string.empty),
             modifier = Modifier.size(128.dp).clickable {
 
-//                navController.navigate(ROUTE_LOGIN) {
-//                    popUpTo(ROUTE_SIGNUP) { inclusive = true }
-//                }
+                navController.navigate(ROUTE_LOGIN) {
+                    popUpTo(ROUTE_SIGNUP) { inclusive = true }
+                }
             }
         )
 

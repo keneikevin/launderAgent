@@ -35,7 +35,7 @@ class HomeActivity : AppCompatActivity() {
         navHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
-                    R.id.homeFragment,R.id.shoppingFragment,R.id.profileFragment, R.id.mapFragment ->
+                    R.id.homeFragment,R.id.createServiceFragment,R.id.editProfileFragment, R.id.mapFragment ->
                         binding.bottomNavigationView.visibility = View.VISIBLE
                     else -> binding.bottomNavigationView.visibility = View.GONE
                 }

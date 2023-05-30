@@ -6,24 +6,25 @@
 
     <ImageView
         android:id="@+id/ivPostImage"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:background="@drawable/chocolate"
-        app:layout_constraintDimensionRatio="16:9"
+        android:src="@drawable/profile"
+     app:layout_constraintDimensionRatio="16:9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnSetPostImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/edit"
         android:text="@string/choose_image"
         app:layout_constraintEnd_toEndOf="@id/ivPostImage"
-        app:layout_constraintStart_toStartOf="@id/ivPostImage"
-        app:layout_constraintTop_toTopOf="@id/ivPostImage"
-        app:layout_constraintBottom_toBottomOf="@id/ivPostImage"/>
+        app:layout_constraintTop_toTopOf="@id/ivPostImage" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilCakeText"
@@ -38,7 +39,7 @@
             android:id="@+id/etCakeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/service"
+            android:hint="@string/name"
             android:inputType="textMultiLine"
             android:maxLength="200"
             android:maxLines="5" />
@@ -51,19 +52,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintTop_toBottomOf="@+id/tilCakeText">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPriceName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="price"
-            android:inputType="number"
+            android:hint="@string/email"
+            android:inputType="text"
             android:maxLength="200"
             android:maxLines="5" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilPriceT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/tilPriceText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPriceN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/phone"
+            android:inputType="number"
+            android:maxLength="200"
+            android:maxLines="5" />
+
+    </com.google.android.material.textfield.TextInputLayout>
     <ProgressBar
         android:id="@+id/createPostProgressBar"
         android:layout_width="wrap_content"
@@ -79,8 +101,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="@string/post"
+        android:text="@string/save"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilPriceText" />
+        app:layout_constraintTop_toBottomOf="@+id/tilPriceT" />
+
+    <ImageButton
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/logout"
+        android:text="@string/logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPost" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

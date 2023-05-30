@@ -11,22 +11,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardUseCompatPadding="true"
-    card_view:cardElevation="5dp"
-    card_view:contentPadding="10dp">
+    card_view:cardElevation="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:layout_height="match_parent"
+        android:paddingStart="6dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="6dp"
+        android:paddingBottom="6dp"
         android:orientation="vertical">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/img"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:src="@drawable/chocolate"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
-            card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent" />
 
@@ -35,26 +36,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/img"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="24dp"
             android:layout_toRightOf="@+id/img"
             android:text="Title"
             android:textSize="18sp"
             android:textStyle="bold"
-            card_view:layout_constraintEnd_toEndOf="@+id/img"
-            card_view:layout_constraintStart_toStartOf="@+id/img"
-            card_view:layout_constraintTop_toBottomOf="@+id/img" />
+            card_view:layout_constraintStart_toEndOf="@+id/img"
+            card_view:layout_constraintTop_toTopOf="@+id/img" />
 
         <TextView
             android:id="@+id/textPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/img"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="24dp"
             android:layout_toRightOf="@+id/img"
-            android:textSize="18sp"
             android:fontFamily="@font/poppins_black"
-            card_view:layout_constraintEnd_toEndOf="@+id/img"
-            card_view:layout_constraintStart_toStartOf="@+id/img"
-            card_view:layout_constraintTop_toBottomOf="@+id/img"
+            android:textSize="18sp"
+            card_view:layout_constraintBottom_toBottomOf="@+id/img"
+            card_view:layout_constraintStart_toEndOf="@+id/img"
             tools:text="1800" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

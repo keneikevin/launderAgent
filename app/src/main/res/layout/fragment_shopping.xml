@@ -8,61 +8,56 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/big_image"
-        android:layout_width="340dp"
+        android:layout_width="fill_parent"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
         android:layout_height="340dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/a" />
+        app:srcCompat="@drawable/profile" />
 
     <TextView
         android:id="@+id/etShoppingItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BLACK FOREST"
+        android:text="Kevin"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/big_image"
         app:layout_constraintStart_toStartOf="@+id/big_image"
         app:layout_constraintTop_toBottomOf="@+id/big_image" />
-
-    <Button
+ <ImageView
         android:id="@+id/btnAddShoppingItem"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="ORDER"
-        android:textColor="#FFFFFF"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/logout"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView7"
-        app:layout_constraintTop_toTopOf="@+id/imageView7"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/imageView7"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnAddShoppingItem"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="1800" />
+        app:layout_constraintStart_toEndOf="@+id/logout" />
 
     <TextView
-        android:id="@+id/etItemPrice"
+        android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order your cake and get it in 12hrs."
+        android:layout_marginStart="16dp"
+        android:text="Logout"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/btnAddShoppingItem"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnAddShoppingItem" />
+
+    <ImageView
+        android:id="@+id/etItemPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/edit"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/big_image"
-        app:layout_constraintStart_toStartOf="@+id/big_image"
         app:layout_constraintTop_toTopOf="@+id/big_image" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

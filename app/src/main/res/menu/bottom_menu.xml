@@ -2,24 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
    >
-    <item
-        android:id="@+id/mapFragment"
-        android:title="Map"
-        android:icon="@drawable/map"
-        />
+
     <item
         android:id="@+id/homeFragment"
         android:title="Services"
         android:icon="@drawable/home"
         />
     <item
-        android:id="@+id/shoppingFragment"
+        android:id="@+id/createServiceFragment"
         android:title="Orders"
         android:icon="@drawable/order"
         />
-
     <item
-        android:id="@+id/profileFragment"
+        android:id="@+id/mapFragment"
+        android:title="Map"
+        android:icon="@drawable/map"
+        />
+    <item
+        android:id="@+id/editProfileFragment"
         android:title="Profile"
         android:icon="@drawable/profile"
         />

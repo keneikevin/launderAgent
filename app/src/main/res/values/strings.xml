@@ -19,4 +19,6 @@
     <string name="error_no_image_chosen">no image chosen</string>
     <string name="error_unknown">unknown Error</string>
     <string name="google_map_key">AIzaSyDJTW2gR4O46ry50dB5FF1_f7JqGsPz0eI</string>
+    <string name="cake">Service</string>
+    <string name="save">Save</string>
 </resources>

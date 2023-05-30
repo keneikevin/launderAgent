@@ -5,26 +5,28 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.agent.R
 import com.example.agent.databinding.FragmentCreateBinding
-import com.example.launder.ui.home.snackbar
-import com.example.launder.ui.homepackage.CreateServiceViewModel
+import com.example.agent.databinding.FragmentEditprofileBinding
+import com.example.launder.MainActivity
+import com.example.launder.ui.auth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateServiceFragment : Fragment(R.layout.fragment_create) {
-    private lateinit var binding: FragmentCreateBinding
+class EditProfileFragment : Fragment(R.layout.fragment_editprofile) {
+    private lateinit var binding: FragmentEditprofileBinding
 
 
-    private val viewModel:CreateServiceViewModel by viewModels()
-
+    private val viewModel:AuthViewModel by viewModels()
 
 
     private var curImageUri: Uri? = null
@@ -36,9 +38,15 @@ class CreateServiceFragment : Fragment(R.layout.fragment_create) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentCreateBinding.bind(view)
+        binding = FragmentEditprofileBinding.bind(view)
         //   subscribeToObservers()
-        binding.ivPostImage.setImageURI(curImageUri)
+
+
+        binding.btnLogout.setOnClickListener {
+            viewModel.logout()
+            val intent = Intent(requireActivity(), MainActivity::class.java)
+            startActivity(intent)
+        }
         binding.btnSetPostImage.setOnClickListener {
             //check runtime permission
             if (checkSelfPermission(this.requireContext(),Manifest.permission.READ_EXTERNAL_STORAGE) ==
@@ -52,25 +60,6 @@ class CreateServiceFragment : Fragment(R.layout.fragment_create) {
                 //permission already granted
                 pickImageFromGallery()
             }
-        }
-        val stringArray = arrayOf("Kg","Item","Pair")
-        binding.picker.displayedValues = stringArray
-       val numberPicker = binding.picker
-        numberPicker.value = 1
-        numberPicker.minValue = 0
-        numberPicker.maxValue = stringArray.size - 1
-        numberPicker.displayedValues = stringArray
-        numberPicker.wrapSelectorWheel = true
-        numberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
-            val selectedValue = stringArray[newVal]
-            Toast.makeText(requireContext(), stringArray[newVal], Toast.LENGTH_SHORT).show()
-
-        }
-        binding.btnPost.setOnClickListener {
-
-            curImageUri?.let { uri ->
-                viewModel.createPost(uri, binding.etCakeName.text.toString(),binding.etPriceName.text.toString(),stringArray[numberPicker.value])
-            } ?: snackbar(getString(R.string.error_no_image_chosen))
         }
     }
     private fun pickImageFromGallery() {
@@ -108,12 +97,8 @@ class CreateServiceFragment : Fragment(R.layout.fragment_create) {
     //handle result of picked image
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
             binding.ivPostImage.setImageURI(data?.data)
-            curImageUri = data?.data
-            data?.data?.let { viewModel.setCurImageUri(it) }
-
         }
     }
 }

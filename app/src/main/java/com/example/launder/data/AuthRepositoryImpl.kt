@@ -1,25 +1,37 @@
 package com.example.launder.data
 
 import android.content.ContentValues.TAG
+import android.net.Uri
 import android.util.Log
-import com.example.launder.data.utils.await
+import com.example.launder.data.entities.Cake
+import com.example.launder.data.other.Constants.SERVICE_COLLECTION
+import com.example.launder.data.other.safeCall
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
+import java.util.*
 import javax.inject.Inject
-
 
 class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 
 ) : AuthRepository {
     var db = FirebaseFirestore.getInstance()
-     override val currentUser: FirebaseUser?
+    private val firestore = FirebaseFirestore.getInstance()
+    private val storage = Firebase.storage
+    private val cakes = firestore.collection(SERVICE_COLLECTION)
+
+
+    override val currentUser: FirebaseUser?
         get() = firebaseAuth.currentUser
 
     override suspend fun login(email: String, password: String): Resource<FirebaseUser> {
@@ -32,6 +44,24 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun createPost(imageUri: Uri, name: String, prise:String,per:String) = withContext(
+        Dispatchers.IO) {
+        safeCall {
+            val postId = UUID.randomUUID().toString()
+            val imageUploadResult = storage.getReference(postId).putFile(imageUri).await()
+            val imageUrl = imageUploadResult?.metadata?.reference?.downloadUrl?.await().toString()
+            val post = Cake(
+                mediaId = postId,
+                title = name,
+                img = imageUrl,
+                price = prise,
+                per = per
+            )
+            cakes.document(postId).set(post).await()
+            Resouce.success(Any())
+        }
+    }
+
     override suspend fun signup(name: String, email: String, password: String): Resource<FirebaseUser> {
         return try {
             val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await().also {
@@ -39,7 +69,7 @@ class AuthRepositoryImpl @Inject constructor(
                 user["email"] = firebaseAuth.currentUser?.email.toString()
                 user["name"] = name
                 user["type"] = "agent"
-     5
+
 // Add a new document with a generated ID
                 db.collection("users")
 

@@ -15,6 +15,7 @@ import androidx.navigation.findNavController
 import com.example.agent.R
 import com.example.agent.databinding.FragmentHomeBinding
 import com.example.agent.databinding.FragmentProfileBinding
+import com.example.agent.databinding.FragmentShoppingBinding
 import com.example.launder.MainActivity
 import com.example.launder.ui.auth.AuthViewModel
 import com.example.launder.ui.home.HomeScreen
@@ -22,9 +23,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class ProfileFragment :Fragment(R.layout.fragment_profile){
+class ProfileFragment :Fragment(R.layout.fragment_shopping){
 
-    private lateinit var binding: FragmentProfileBinding
+    private lateinit var binding: FragmentShoppingBinding
     lateinit var viewModel: AuthViewModel
     private lateinit var navController: NavHostController
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,20 +33,12 @@ class ProfileFragment :Fragment(R.layout.fragment_profile){
         setHasOptionsMenu(true)
 
         viewModel = ViewModelProvider(requireActivity()).get(AuthViewModel::class.java)
-        binding = FragmentProfileBinding.bind(view)
+        binding = FragmentShoppingBinding.bind(view)
         // Get the NavHostController from the Composable function
         // Create the NavHostController
         navController = NavHostController(this.requireActivity())
 
-        binding.composeView.apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                MaterialTheme {
-                    HomeScreen(viewModel,navController)
-                }
-            }
-        }
-        binding.btnAddShoppingItem.visibility = View.GONE
+
     binding.btnAddShoppingItem.setOnClickListener {
         viewModel.logout()
         val intent = Intent(requireActivity(), MainActivity::class.java)
