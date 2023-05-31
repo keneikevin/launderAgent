@@ -9,25 +9,26 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.example.agent.R
 import com.example.agent.databinding.CardBinding
-import com.example.launder.data.entities.Cake
+import com.example.launder.data.entities.Service
 import javax.inject.Inject
 
 
 class CakeAdapter @Inject constructor(
-):   PagingDataAdapter<Cake, CakeAdapter.CakeViewHolder>(Companion) {
-    class CakeViewHolder(val binding: CardBinding, var cake: Cake? = null) : RecyclerView.ViewHolder(
+):   PagingDataAdapter<Service, CakeAdapter.CakeViewHolder>(Companion) {
+
+    class CakeViewHolder(val binding: CardBinding, var service: Service? = null) : RecyclerView.ViewHolder(
         binding.root){
         val tvTitle= binding.textName
         val tvPrice= binding.textPrice
         val tvPer= binding.per
         val ivCake = binding.img
     }
-    companion object : DiffUtil.ItemCallback<Cake>() {
-        override fun areItemsTheSame(oldItem: Cake, newItem: Cake): Boolean {
+    companion object : DiffUtil.ItemCallback<Service>() {
+        override fun areItemsTheSame(oldItem: Service, newItem: Service): Boolean {
             return oldItem.mediaId == newItem.mediaId
         }
 
-        override fun areContentsTheSame(oldItem: Cake, newItem: Cake): Boolean {
+        override fun areContentsTheSame(oldItem: Service, newItem: Service): Boolean {
             return oldItem == newItem
         }
     }

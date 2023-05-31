@@ -43,7 +43,7 @@ class HomeFragment :Fragment(R.layout.fragment_home){
     ): View? {
         return super.onCreateView(inflater, container, savedInstanceState)
         setUpRecyclerView()
-
+        cakeAdapter=CakeAdapter()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,34 +58,12 @@ class HomeFragment :Fragment(R.layout.fragment_home){
         }
     }
 
-    private val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
-        0, LEFT or RIGHT
-    ) {
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ) = true
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//            cakeAdapter=CakeAdapter()
-//            val pos = viewHolder.layoutPosition
-//           // val item = cakeAdapter.shoppingItems[pos]
-//            val item = cakeAdapter.shoppingItems[pos]
-//            viewModel?.deletePost(item)
-//            Snackbar.make(requireView(), "Successfully deleted item", Snackbar.LENGTH_LONG).apply {
-//                setAction("Undo") {
-//                    viewModel?.createPost(item)
-//                }
-//                show()
-//            }
-        }
-    }
     private fun setUpRecyclerView()= binding.rvCakes.apply{
         snackbar("swipe to delete")
         cakeAdapter=CakeAdapter()
         binding.rvCakes.adapter = cakeAdapter
         binding.rvCakes.layoutManager = LinearLayoutManager(requireContext())
+        ItemTouchHelper(itemTouchCallback).attachToRecyclerView(this)
         itemAnimator = null
 
         lifecycleScope.launch {
@@ -101,6 +79,28 @@ class HomeFragment :Fragment(R.layout.fragment_home){
                         it.append is LoadState.Loading
             }
         }
+
+    }
+    private val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
+        0, LEFT or RIGHT
+    ) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ) = true
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val pos = viewHolder.layoutPosition
+//            val item = cakeAdapter.shoppingItems[pos]
+//            viewModel?.deletePost(item)
+            Snackbar.make(requireView(), "Successfully deleted item", Snackbar.LENGTH_LONG).apply {
+                setAction("Undo") {
+                 //   viewModel?.insertShoppingItemIntoDb(item)
+                }
+                show()
+        }
+    }
     }
 
 }

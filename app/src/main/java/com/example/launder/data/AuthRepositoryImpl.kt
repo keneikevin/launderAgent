@@ -1,21 +1,15 @@
 package com.example.launder.data
 
-import android.content.ContentValues.TAG
 import android.net.Uri
-import android.util.Log
-import com.example.launder.data.entities.Cake
+import com.example.launder.data.entities.Service
 import com.example.launder.data.entities.ProfileUpdate
 import com.example.launder.data.entities.User
 import com.example.launder.data.other.Constants.DEFAULT_PROFILE_PICTURE
 import com.example.launder.data.other.Constants.SERVICE_COLLECTION
 import com.example.launder.data.other.safeCall
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
@@ -53,7 +47,7 @@ class AuthRepositoryImpl @Inject constructor(
             val postId = UUID.randomUUID().toString()
             val imageUploadResult = storage.getReference(postId).putFile(imageUri).await()
             val imageUrl = imageUploadResult?.metadata?.reference?.downloadUrl?.await().toString()
-            val post = Cake(
+            val post = Service(
                 mediaId = postId,
                 title = name,
                 img = imageUrl,
@@ -67,16 +61,17 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun updateProfilePicture(uid: String, imageUri: Uri) =
-        withContext(Dispatchers.IO) {
+    override suspend fun updateProfilePicture(uid: String, imageUri: Uri) = withContext(Dispatchers.IO) {
+
             val storageRef = storage.getReference(uid)
             val user = getUser(uid).data!!
             if (user.profilePictureUrl != DEFAULT_PROFILE_PICTURE) {
                 storage.getReferenceFromUrl(user.profilePictureUrl).delete().await()
             }
+
             storageRef.putFile(imageUri).await().metadata?.reference?.downloadUrl?.await()
         }
-    override suspend fun deletePost(post: Cake) = withContext(Dispatchers.IO) {
+    override suspend fun deletePost(post: Service) = withContext(Dispatchers.IO) {
         safeCall {
             cakes.document(post.mediaId).delete().await()
             storage.getReferenceFromUrl(post.img).delete().await()
@@ -87,16 +82,24 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun updateProfile(profileUpdate: ProfileUpdate) = withContext(Dispatchers.IO) {
         safeCall {
-            val imageUrl = profileUpdate.profilePictureUri?.let { uri ->
-                updateProfilePicture(profileUpdate.uidToUpdate, uri).toString()
-            }
+//            val imageUrl = profileUpdate.profilePictureUri?.let { uri ->
+//                updateProfilePicture(profileUpdate.uidToUpdate, uri).toString()
+//            }
+
+            val uid = firebaseAuth.uid!!
+            val postId = UUID.randomUUID().toString()
+            val imageUploadResult =
+                profileUpdate.profilePictureUri?.let { storage.getReference(postId).putFile(it).await() }
+            val imageUrl = imageUploadResult?.metadata?.reference?.downloadUrl?.await().toString()
+
+
             val map = mutableMapOf(
                 "username" to profileUpdate.username,
                 "phone" to profileUpdate.phone,
                 "email" to profileUpdate.email,
                 "time" to profileUpdate.time,
             )
-            imageUrl?.let { url ->
+            imageUrl.let { url ->
                 map["profilePictureUrl"] = url
             }
 

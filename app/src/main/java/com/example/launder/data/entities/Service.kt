@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity(tableName = "cakes")
-data class Cake (
+data class Service (
     val mediaId: String ="",
     val authorUid: String ="",
     val img: String ="",

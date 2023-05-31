@@ -15,11 +15,10 @@ import com.example.agent.R
 import com.example.launder.data.AuthRepository
 import com.example.launder.data.CakePagingSource
 import com.example.launder.data.Resouce
-import com.example.launder.data.entities.Cake
+import com.example.launder.data.entities.Service
 import com.example.launder.data.entities.ProfileUpdate
 import com.example.launder.data.entities.User
 import com.example.launder.data.other.Constants.MIN_USER_NAME
-import com.example.launder.data.other.safeCall
 import com.example.launder.data.utils.Event
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -57,8 +56,8 @@ class AuthViewModel @Inject constructor(
     val createPostStatus: LiveData<Resouce<Any>> = _createPostStatus
 
 
-    private val _deletePostStatus = MutableLiveData<Event<Resouce<Cake>>>()
-    val deletePostStatus: LiveData<Event<Resouce<Cake>>> = _deletePostStatus
+    private val _deletePostStatus = MutableLiveData<Event<Resouce<Service>>>()
+    val deletePostStatus: LiveData<Event<Resouce<Service>>> = _deletePostStatus
 
     private val _curImageUri = MutableLiveData<Uri>()
     val curImageUri: LiveData<Uri> = _curImageUri
@@ -141,7 +140,7 @@ class AuthViewModel @Inject constructor(
             }
         }
     }
-    fun deletePost(post: Cake) {
+    fun deletePost(post: Service) {
         _deletePostStatus.postValue(Event(Resouce.loading(null)))
         viewModelScope.launch(dispatcher) {
             val result = repository.deletePost(post)
