@@ -77,7 +77,6 @@ class CreateServiceFragment : Fragment(R.layout.fragment_create) {
             curImageUri?.let { uri ->
                 viewModel.createPost(uri, binding.etCakeName.text.toString(),binding.etPriceName.text.toString(),stringArray[numberPicker.value])
             } ?: snackbar(getString(R.string.error_no_image_chosen))
-          //  findNavController().navigate(R.id.action_createServiceFragment_to_homeFragment)
         }
     }
     private fun pickImageFromGallery() {
@@ -131,15 +130,17 @@ class CreateServiceFragment : Fragment(R.layout.fragment_create) {
                 when (result.status) {
                     Status.SUCCESS ->{
                         binding.createPostProgressBar.visibility =  View.GONE
+                        binding.btnPost.isClickable = true
                         snackbar("Service created Successfully")
                         findNavController().navigate(R.id.action_createServiceFragment_to_homeFragment)
                     }
                     Status.ERROR ->{
                         binding.createPostProgressBar.visibility = View.GONE
-                        binding.createPostProgressBar.visibility = View.GONE
+                        binding.btnPost.isClickable = true
                         snackbar(it.message.toString())
                     }
-                    Status.LOADING ->{binding.createPostProgressBar.visibility = View.VISIBLE}
+                    Status.LOADING ->{binding.createPostProgressBar.visibility = View.VISIBLE
+                        binding.btnPost.isClickable = false}
                 }
             }
 

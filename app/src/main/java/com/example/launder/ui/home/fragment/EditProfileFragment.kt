@@ -67,6 +67,11 @@ class EditProfileFragment : Fragment(R.layout.fragment_editprofile) {
 
             val profileUpdate = ProfileUpdate(auth.uid.toString(),username,email,phone,"",cuImageUri)
             viewModel.updateProfile(profileUpdate)
+
+//            cuImageUri?.let { uri ->
+//                val profileUpdate = ProfileUpdate(auth.uid.toString(),username,email,phone,"",cuImageUri)
+//                viewModel.updateProfile(profileUpdate)
+//            } ?: snackbar(getString(R.string.error_no_image_chosen))
         }
 
         binding.btnSetPostImage.setOnClickListener {
@@ -92,15 +97,18 @@ class EditProfileFragment : Fragment(R.layout.fragment_editprofile) {
                 when (result.status) {
                     Status.SUCCESS ->{
                         binding.createPostProgressBar.visibility =  View.GONE
+                        binding.btnPost.isClickable = true
                         snackbar("profile updated Successfully")
                         findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
                     }
                     Status.ERROR ->{
                                     binding.createPostProgressBar.visibility = View.GONE
-            binding.createPostProgressBar.visibility = View.GONE
+                        binding.btnPost.isClickable = true
             snackbar(it.message.toString())
                     }
-                    Status.LOADING ->{binding.createPostProgressBar.visibility = View.VISIBLE}
+                    Status.LOADING ->{binding.createPostProgressBar.visibility = View.VISIBLE
+                        binding.btnPost.isClickable = false
+                    }
                 }
             }
 

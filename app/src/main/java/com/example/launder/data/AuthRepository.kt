@@ -17,8 +17,12 @@ interface AuthRepository {
 
     suspend fun deletePost(post: Cake): Resouce<Cake>
 
-    suspend fun createPost(imageUri: Uri, name: String, prise:String,per:String): Resouce<Any>
+  //  suspend fun createPost(imageUri: Uri, name: String, prise:String,per:String): Resouce<Any>
+
+//
+//    suspend fun getPostsForProfile(uid: String):Resouce<List<Cake>>
     suspend fun signup(name: String, email: String, password: String,phone:String): Resource<FirebaseUser>
     fun logout()
-    fun add()
+
+    suspend fun createPot(imageUri: Uri, name: String, prise:String,per:String): Resouce<Any>
 }

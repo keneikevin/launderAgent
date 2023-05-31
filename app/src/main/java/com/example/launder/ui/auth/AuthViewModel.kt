@@ -56,9 +56,6 @@ class AuthViewModel @Inject constructor(
     private val _createPostStatus = MutableLiveData<Resouce<Any>>()
     val createPostStatus: LiveData<Resouce<Any>> = _createPostStatus
 
-    val flow = Pager(PagingConfig(MifareUltralight.PAGE_SIZE)){
-        CakePagingSource(FirebaseFirestore.getInstance())
-    }.flow.cachedIn(viewModelScope)
 
     private val _deletePostStatus = MutableLiveData<Event<Resouce<Cake>>>()
     val deletePostStatus: LiveData<Event<Resouce<Cake>>> = _deletePostStatus
@@ -69,6 +66,9 @@ class AuthViewModel @Inject constructor(
 
     val currentUser: FirebaseUser?
         get() = repository.currentUser
+    val flow = Pager(PagingConfig(MifareUltralight.PAGE_SIZE)){
+        CakePagingSource(FirebaseFirestore.getInstance(),currentUser?.uid.toString())
+    }.flow.cachedIn(viewModelScope)
 
     init {
         if(repository.currentUser != null){
@@ -119,7 +119,9 @@ class AuthViewModel @Inject constructor(
             _updateProfileStatus.postValue((Resouce.loading(null)))
             viewModelScope.launch(dispatcher){
                 val result = repository.updateProfile(profileUpdate)
+                Log.d("trtrt",result.toString())
                 _updateProfileStatus.postValue((result))
+
             }
         }
     }
@@ -134,7 +136,7 @@ class AuthViewModel @Inject constructor(
         } else{
             _createPostStatus.postValue(((Resouce.loading(null))))
             viewModelScope.launch(dispatcher) {
-                val result = repository.createPost(imageUri,name,price,per)
+                val result = repository.createPot(imageUri,name,price,per)
                 _createPostStatus.postValue((result))
             }
         }

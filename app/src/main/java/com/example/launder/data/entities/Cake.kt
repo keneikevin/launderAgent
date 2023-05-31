@@ -8,6 +8,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "cakes")
 data class Cake (
     val mediaId: String ="",
+    val authorUid: String ="",
     val img: String ="",
     @PrimaryKey()
     val price: String ="",

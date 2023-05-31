@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
@@ -46,10 +47,9 @@ class AuthRepositoryImpl @Inject constructor(
             Resource.Error(e.localizedMessage)
         }
     }
-
-    override suspend fun createPost(imageUri: Uri, name: String, prise:String,per:String) = withContext(
-        Dispatchers.IO) {
+    override suspend fun createPot(imageUri: Uri,name: String, prise:String,per:String) = withContext(Dispatchers.IO) {
         safeCall {
+            val uid = firebaseAuth.uid!!
             val postId = UUID.randomUUID().toString()
             val imageUploadResult = storage.getReference(postId).putFile(imageUri).await()
             val imageUrl = imageUploadResult?.metadata?.reference?.downloadUrl?.await().toString()
@@ -58,19 +58,15 @@ class AuthRepositoryImpl @Inject constructor(
                 title = name,
                 img = imageUrl,
                 price = prise,
-                per = per
+                per = per,
+                authorUid = uid
             )
             cakes.document(postId).set(post).await()
             Resouce.success(Any())
         }
     }
-    override suspend fun deletePost(post: Cake) = withContext(Dispatchers.IO) {
-        safeCall {
-            cakes.document(post.mediaId).delete().await()
-            storage.getReferenceFromUrl(post.img).delete().await()
-            Resouce.success(post)
-        }
-    }
+
+
     override suspend fun updateProfilePicture(uid: String, imageUri: Uri) =
         withContext(Dispatchers.IO) {
             val storageRef = storage.getReference(uid)
@@ -80,20 +76,14 @@ class AuthRepositoryImpl @Inject constructor(
             }
             storageRef.putFile(imageUri).await().metadata?.reference?.downloadUrl?.await()
         }
-//    return try {
-//        val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await().also {
-//
-//            val uid = it.user?.uid!!
-//            val user = User(uid,email,name,"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png","phone",phone)
-//            users.document(uid).set(user).await()
-//
-//        }
-//
-//        Resource.Success(result.user!!)
-//    } catch (e: Exception) {
-//        e.printStackTrace()
-//        Resource.Error(e.localizedMessage)
-//    }
+    override suspend fun deletePost(post: Cake) = withContext(Dispatchers.IO) {
+        safeCall {
+            cakes.document(post.mediaId).delete().await()
+            storage.getReferenceFromUrl(post.img).delete().await()
+            Resouce.success(post)
+        }
+    }
+
 
     override suspend fun updateProfile(profileUpdate: ProfileUpdate) = withContext(Dispatchers.IO) {
         safeCall {
@@ -145,29 +135,26 @@ class AuthRepositoryImpl @Inject constructor(
             Resource.Error(e.localizedMessage)
         }
     }
+//    override suspend fun getPostsForProfile(uid: String) = withContext(Dispatchers.IO) {
+//        safeCall {
+//            val profilePosts = cakes.whereEqualTo("authorUid", uid)
+//                .orderBy("date", Query.Direction.DESCENDING)
+//                .get()
+//                .await()
+//                .toObjects(Cake::class.java)
+//                .onEach { post ->
+//                    val user = getUser(post.authorUid).data!!
+//                    post.img = user.profilePictureUrl
+//                    post.title = user.username
+//                    post.price = uid in post.likedBy
+//                }
+//            Resouce.success(profilePosts)
+//        }
+//    }
 
     override fun logout() {
         firebaseAuth.signOut()
     }
-    override fun add() {
-        // Create a new user with a first and last name
-        // Create a new user with a first and last name
-        val user: MutableMap<String, Any> = HashMap()
-        user["service"] = "wash"
-        user["discount"] = "NO"
-        user["cost"] = 1815
 
-// Add a new document with a generated ID
 
-// Add a new document with a generated ID
-        db.collection("services")
-            .add(user)
-            .addOnSuccessListener(OnSuccessListener<DocumentReference> { documentReference ->
-                Log.d(
-                    TAG,
-                    "DocumentSnapshot added with ID: " + documentReference.id
-                )
-            })
-            .addOnFailureListener(OnFailureListener { e -> Log.w(TAG, "Error adding document", e) })
-    }
 }

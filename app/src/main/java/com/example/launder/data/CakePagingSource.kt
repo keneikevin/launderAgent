@@ -8,16 +8,20 @@ import kotlinx.coroutines.tasks.await
 
 class CakePagingSource(
     private val db: FirebaseFirestore,
-    //  private val uid: String
+      private val uid: String
 ) : PagingSource<QuerySnapshot, Cake>() {
+
     override suspend fun load(params: LoadParams<QuerySnapshot>): LoadResult<QuerySnapshot, Cake> {
         return try {
             val currentPage = params.key ?: db.collection(SERVICE_COLLECTION)
+                .whereEqualTo("authorUid", uid)
                 .get()
                 .await()
 
             val lastDocumentSnapShot = currentPage.documents[currentPage.size() - 1]
             val nextPage = db.collection(SERVICE_COLLECTION)
+                .whereEqualTo("authorUid", uid)
+
                 .startAfter(lastDocumentSnapShot)
                 .get()
                 .await()
