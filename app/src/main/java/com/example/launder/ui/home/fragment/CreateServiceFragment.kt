@@ -12,21 +12,26 @@ import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.RequestManager
 import com.example.agent.R
 import com.example.agent.databinding.FragmentCreateBinding
+import com.example.launder.data.Status
+import com.example.launder.ui.auth.AuthViewModel
 import com.example.launder.ui.home.snackbar
-import com.example.launder.ui.homepackage.CreateServiceViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreateServiceFragment : Fragment(R.layout.fragment_create) {
     private lateinit var binding: FragmentCreateBinding
 
 
-    private val viewModel:CreateServiceViewModel by viewModels()
+    private val viewModel: AuthViewModel by viewModels()
 
-
+    @Inject
+    lateinit var glide: RequestManager
 
     private var curImageUri: Uri? = null
 
@@ -38,7 +43,7 @@ class CreateServiceFragment : Fragment(R.layout.fragment_create) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCreateBinding.bind(view)
-        //   subscribeToObservers()
+           subscribeToObservers()
         binding.ivPostImage.setImageURI(curImageUri)
         binding.btnSetPostImage.setOnClickListener {
             //check runtime permission
@@ -72,7 +77,7 @@ class CreateServiceFragment : Fragment(R.layout.fragment_create) {
             curImageUri?.let { uri ->
                 viewModel.createPost(uri, binding.etCakeName.text.toString(),binding.etPriceName.text.toString(),stringArray[numberPicker.value])
             } ?: snackbar(getString(R.string.error_no_image_chosen))
-            findNavController().navigate(R.id.action_createServiceFragment_to_homeFragment)
+          //  findNavController().navigate(R.id.action_createServiceFragment_to_homeFragment)
         }
     }
     private fun pickImageFromGallery() {
@@ -117,6 +122,29 @@ class CreateServiceFragment : Fragment(R.layout.fragment_create) {
             data?.data?.let { viewModel.setCurImageUri(it) }
 
         }
+    }
+    private fun subscribeToObservers() {
+
+
+        viewModel.createPostStatus.observe(viewLifecycleOwner, Observer { result ->
+            result?.let {
+                when (result.status) {
+                    Status.SUCCESS ->{
+                        binding.createPostProgressBar.visibility =  View.GONE
+                        snackbar("Service created Successfully")
+                        findNavController().navigate(R.id.action_createServiceFragment_to_homeFragment)
+                    }
+                    Status.ERROR ->{
+                        binding.createPostProgressBar.visibility = View.GONE
+                        binding.createPostProgressBar.visibility = View.GONE
+                        snackbar(it.message.toString())
+                    }
+                    Status.LOADING ->{binding.createPostProgressBar.visibility = View.VISIBLE}
+                }
+            }
+
+        })
+
     }
 }
 

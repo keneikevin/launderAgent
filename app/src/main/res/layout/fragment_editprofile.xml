@@ -41,8 +41,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/name"
             android:inputType="textMultiLine"
-            android:maxLength="200"
-            android:maxLines="5" />
+            android:maxLength="15"
+          />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,8 +62,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/email"
             android:inputType="text"
-            android:maxLength="200"
-            android:maxLines="5" />
+            android:maxLength="10"
+            android:maxLines="1" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/phone"
             android:inputType="number"
-            android:maxLength="200"
+            android:maxLength="10"
             android:maxLines="5" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -100,19 +100,10 @@
         android:id="@+id/btnPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:text="@string/save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tilPriceT" />
-
-    <ImageButton
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/logout"
-        android:text="@string/logout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPost" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

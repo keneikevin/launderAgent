@@ -7,10 +7,10 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 @IgnoreExtraProperties
 data class User(
     val uid: String = "",
+    val email: String = "",
     val username: String = "",
     val profilePictureUrl: String = DEFAULT_PROFILE_PICTURE,
-    val description: String = "",
-    var follows: List<String> = listOf(),
-    @get:Exclude
-    var isFollowing: Boolean = false
+    val time: String = "",
+    val phone: String = ""
+
 )

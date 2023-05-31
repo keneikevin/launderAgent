@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graqph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/profileFragment">
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.launder.ui.home.fragment.HomeFragment"
@@ -16,7 +16,11 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.launder.ui.home.fragment.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/shoppingFragment"
         android:name="com.example.launder.ui.home.fragment.ShoppingFragment"
@@ -36,5 +40,9 @@
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.launder.ui.home.fragment.EditProfileFragment"
-        android:label="EditProfileFragment" />
+        android:label="EditProfileFragment" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>

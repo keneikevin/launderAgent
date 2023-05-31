@@ -128,7 +128,7 @@ fun SignupScreen(viewModel: AuthViewModel?, navController: NavHostController) {
 
         Button(
             onClick = {
-                viewModel?.signup(name, email, password)
+                viewModel?.signup(name, email, password,"0710913245")
             },
             modifier = Modifier.constrainAs(refButtonSignup) {
                 top.linkTo(refPassword.bottom, spacing.large)
@@ -161,11 +161,11 @@ fun SignupScreen(viewModel: AuthViewModel?, navController: NavHostController) {
 
         signupFlow?.value?.let {
             when (it) {
-                is Resource.Failure -> {
+                is Resource.Error -> {
                     val context = LocalContext.current
-                    Toast.makeText(context, it.exception.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
                 }
-                Resource.Loading -> {
+               is Resource.Loading -> {
                     CircularProgressIndicator(modifier = Modifier.constrainAs(refLoader) {
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)

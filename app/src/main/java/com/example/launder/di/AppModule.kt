@@ -1,6 +1,10 @@
 package com.example.launder.di
 
 import android.content.Context
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.example.agent.R
 import com.example.launder.data.AuthRepository
 import com.example.launder.data.AuthRepositoryImpl
 import com.google.firebase.auth.FirebaseAuth
@@ -28,6 +32,15 @@ class AppModule {
     ) = context
 
 
+    @Provides
+    fun provideGlideInstance(
+        @ApplicationContext context: Context
+    ) = Glide.with(context).setDefaultRequestOptions(
+        RequestOptions()
+            .placeholder(R.drawable.profile)
+            .error(R.drawable.ic_broken_image)
+            .diskCacheStrategy(DiskCacheStrategy.DATA)
+    )
     @Provides
     fun provideMainDispatcher() = Dispatchers.Main as CoroutineDispatcher
 }

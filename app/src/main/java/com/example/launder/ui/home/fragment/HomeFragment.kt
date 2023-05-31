@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.agent.R
 import com.example.agent.databinding.FragmentHomeBinding
 import com.example.launder.adapter.CakeAdapter
-import com.example.launder.ui.homepackage.CreateServiceViewModel
+import com.example.launder.ui.auth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -27,12 +27,12 @@ class HomeFragment :Fragment(R.layout.fragment_home){
     @Inject
     lateinit var cakeAdapter: CakeAdapter
     private lateinit var binding: FragmentHomeBinding
-    lateinit var viewModel : CreateServiceViewModel
+    lateinit var viewModel : AuthViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        viewModel = ViewModelProvider(requireActivity()).get(CreateServiceViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(AuthViewModel::class.java)
         binding = FragmentHomeBinding.bind(view)
         setUpRecyclerView()
         binding.fab.setOnClickListener {

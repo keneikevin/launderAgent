@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.agent.R
-import com.example.agent.databinding.FragmentMapBinding
 import com.example.agent.databinding.FragmentTrackingBinding
 import com.example.launder.ui.auth.AuthViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -39,9 +38,7 @@ class MapFragment :Fragment(R.layout.fragment_tracking){
         binding.mapView.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(AuthViewModel::class.java)
 
-//        binding.btnSampleOne.setOnClickListener {
-//            showDialogOne()
-//        }
+
         binding.mapView.getMapAsync {
             map = it
 

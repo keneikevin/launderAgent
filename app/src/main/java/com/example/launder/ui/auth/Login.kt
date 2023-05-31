@@ -143,11 +143,11 @@ fun LoginScreen(viewModel: AuthViewModel?, navController: NavController) {
 
         loginFlow?.value?.let {
             when (it) {
-                is Resource.Failure -> {
+                is Resource.Error -> {
                     val context = LocalContext.current
-                    Toast.makeText(context, it.exception.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
                 }
-                Resource.Loading -> {
+               is Resource.Loading -> {
                     CircularProgressIndicator(modifier = Modifier.constrainAs(refLoader) {
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
