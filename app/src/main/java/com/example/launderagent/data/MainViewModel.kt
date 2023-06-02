@@ -53,12 +53,6 @@ class MainViewModel @Inject constructor(
     val curImageUri: LiveData<Uri> = _curImageUri
 
 
-
-
-    private val _post = MutableLiveData<List<Service>>()
-    val post: LiveData<List<Service>> = _post
-
-
     private val _deletePostStatus = MutableLiveData<Resouce<Service>>()
     val deletePostStatus: LiveData<Resouce<Service>> = _deletePostStatus
 
@@ -139,7 +133,7 @@ class MainViewModel @Inject constructor(
             _updateProfileStatus.postValue((Resouce.loading(null)))
             viewModelScope.launch(dispatcher){
                 val result = repository.updateProfile(profileUpdate)
-                Log.d("trtrt",result.toString())
+
                 _updateProfileStatus.postValue((result))
 
             }

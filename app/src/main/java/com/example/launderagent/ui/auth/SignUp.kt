@@ -1,5 +1,6 @@
 package com.example.launderagent.ui.auth
 
+import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.widget.Toast
@@ -24,6 +25,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.launderagent.activity.HomeActivity
 import com.example.launderagent.data.MainViewModel
 import com.example.launderagent.other.Resource
 import com.example.launderagent.ui.auth.navigation.AuthHeader
@@ -40,6 +42,7 @@ fun SignupScreen(viewModel: MainViewModel?, navController: NavHostController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
+    val context = LocalContext.current
     val signupFlow = viewModel?.signupFlow?.collectAsState()
 
     ConstraintLayout(
@@ -177,9 +180,8 @@ fun SignupScreen(viewModel: MainViewModel?, navController: NavHostController) {
                 }
                 is Resource.Success -> {
                     LaunchedEffect(Unit) {
-                        navController.navigate(ROUTE_HOME) {
-                            popUpTo(ROUTE_SIGNUP) { inclusive = true }
-                        }
+                        context.startActivity(Intent(context, HomeActivity::class.java))
+
                     }
                 }
             }

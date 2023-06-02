@@ -6,12 +6,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkSelfPermission
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -40,11 +42,17 @@ class EditProfileFragment : Fragment(R.layout.fragment_editprofile) {
     private var cuImageUri: Uri? = null
      lateinit var localions: String
 
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
+            binding.ivPostImage.setImageURI(data?.data)
+            data?.data?.let { viewModel.setCurImageUri(it) }
+        }}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentEditprofileBinding.bind(view)
+
 
         auth = FirebaseAuth.getInstance()
         subscribeToObservers()
@@ -83,8 +91,8 @@ class EditProfileFragment : Fragment(R.layout.fragment_editprofile) {
             val phone = binding.etPriceN.text.toString()
 
             val profileUpdate = ProfileUpdate(auth.uid.toString(),username,email,phone,localions,cuImageUri)
-            viewModel.updateProfile(profileUpdate)
 
+                viewModel.updateProfile(profileUpdate)
         }
 
         binding.btnSetPostImage.setOnClickListener {
@@ -104,15 +112,16 @@ class EditProfileFragment : Fragment(R.layout.fragment_editprofile) {
     }
     private fun subscribeToObservers() {
 
-
         viewModel.updateProfileStatus.observe(viewLifecycleOwner, Observer { result ->
             result?.let {
                 when (result.status) {
                     Status.SUCCESS ->{
+
                         binding.createPostProgressBar.visibility =  View.GONE
                         binding.btnPost.isClickable = true
                         snackbar("profile updated Successfully")
                         findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
+
                     }
                     Status.ERROR ->{
                                     binding.createPostProgressBar.visibility = View.GONE
@@ -126,10 +135,17 @@ class EditProfileFragment : Fragment(R.layout.fragment_editprofile) {
             }
 
         })
+        viewModel.curImageUri.observe(viewLifecycleOwner){uri->
+          uri?.let {
+              cuImageUri=it
+              Log.d("raetat",it.toString())
+          }
+        }
         viewModel.getUserStatus.observe(viewLifecycleOwner, Observer {result->
             result?.let {
                 when (result.status) {
                     Status.SUCCESS ->{
+
                         binding.createPostProgressBar.visibility = View.GONE
                         glide.load(it.data?.profilePictureUrl).into(binding.ivPostImage)
                         binding.etCakeName.setText(it.data?.username)
@@ -182,13 +198,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_editprofile) {
     }
 
     //handle result of picked image
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            binding.ivPostImage.setImageURI(data?.data)
-            cuImageUri = data?.data
-      //      data?.data?.let { viewModel.setCurImageUri(it) }
-    }}
+
 }
 
 

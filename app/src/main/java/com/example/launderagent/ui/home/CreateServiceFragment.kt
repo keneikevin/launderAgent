@@ -117,7 +117,6 @@ class CreateServiceFragment : Fragment(R.layout.fragment_create) {
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
             binding.ivPostImage.setImageURI(data?.data)
             curImageUri = data?.data
-            data?.data?.let { viewModel.setCurImageUri(it) }
 
         }
     }
@@ -131,7 +130,7 @@ class CreateServiceFragment : Fragment(R.layout.fragment_create) {
                         binding.btnPost.isClickable = true
                         snackbar("Service created Successfully")
 
-                        findNavController().navigate(R.id.action_createServiceFragment_to_basePostFragment)
+                        findNavController().navigate(R.id.action_createServiceFragment_to_serviceFragment)
                     }
                     Status.ERROR ->{
                         binding.createPostProgressBar.visibility = View.GONE

@@ -13,7 +13,7 @@
         android:icon="@drawable/map"
         />
     <item
-        android:id="@+id/basePostFragment"
+        android:id="@+id/serviceFragment"
         android:title="Services"
         android:icon="@drawable/service"
         />

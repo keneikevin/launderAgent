@@ -38,7 +38,7 @@ class ServiceFragment : Fragment(R.layout.fragment_service) {
         subscribeToObservers()
         setUpRecylerView()
         binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_basePostFragment_to_createServiceFragment)
+            findNavController().navigate(R.id.action_serviceFragment_to_createServiceFragment)
         }
         serviveAdapter.notifyDataSetChanged()
 
