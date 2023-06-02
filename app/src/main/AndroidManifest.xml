@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
-        android:name="com.example.launder.LaunderApp"
+        android:name="com.example.launderagent.LaunderApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -39,10 +39,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map_key" />
 
-        <activity android:name="com.example.launder.HomeActivity" />
-        <activity android:name="com.example.launder.MapActivity" />
+        <activity android:name="com.example.launderagent.HomeActivity" />
+        <activity android:name="com.example.launderagent.MapActivity" />
         <activity
-            android:name="com.example.launder.MainActivity"
+            android:name="com.example.launderagent.MainActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>

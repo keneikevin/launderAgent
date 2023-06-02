@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Launder</string>
+    <string name="app_name">Launder Agent</string>
     <string name="email">email</string>
     <string name="password">password</string>
     <string name="login">login</string>
@@ -25,4 +25,18 @@
     <string name="error_input_empty">input empty</string>
     <string name="no_description">no description</string>
     <string name="error_fill">Please fill all forms</string>
+    <string name="delete_post_dialog_message">This action cannot be undone.</string>
+    <string name="delete_post_dialog_positive">Yes</string>
+    <string name="delete_post_dialog_negative">No</string>
+    <string name="delete_post_dialog_title">Do you want to delete that post?</string>
+    <string name="add_service">add Service</string>
+
+    <string-array name="locations">
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Swift</item>
+        <item>Python</item>
+        <item>Scala</item>
+        <item>Perl</item>
+    </string-array>
 </resources>

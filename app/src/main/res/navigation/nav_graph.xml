@@ -2,10 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graqph"
-    app:startDestination="@id/profileFragment">
+    app:startDestination="@id/basePostFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.launder.ui.home.fragment.HomeFragment"
+        android:name="com.example.launderagent.ui.home.fragment.HomeFragment"
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_createServiceFragment"
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.launder.ui.home.fragment.ProfileFragment"
+        android:name="com.example.launderagent.ui.home.fragment.ProfileFragment"
         android:label="ProfileFragment" >
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
@@ -23,26 +23,52 @@
     </fragment>
     <fragment
         android:id="@+id/shoppingFragment"
-        android:name="com.example.launder.ui.home.fragment.ShoppingFragment"
+        android:name="com.example.launderagent.ui.home.fragment.ShoppingFragment"
         android:label="ShoppingFragment" />
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.example.launder.ui.home.fragment.MapFragment"
+        android:name="com.example.launderagent.ui.home.fragment.TrackingFragment"
         android:label="MapFragment" />
     <fragment
         android:id="@+id/createServiceFragment"
-        android:name="com.example.launder.ui.home.fragment.CreateServiceFragment"
+        android:name="com.example.launderagent.ui.home.fragment.CreateServiceFragment"
         android:label="CreateServiceFragment" >
         <action
             android:id="@+id/action_createServiceFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_createServiceFragment_to_testFragment"
+            app:destination="@id/testFragment" />
+        <action
+            android:id="@+id/action_createServiceFragment_to_basePostFragment"
+            app:destination="@id/basePostFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.example.launder.ui.home.fragment.EditProfileFragment"
+        android:name="com.example.launderagent.ui.home.fragment.EditProfileFragment"
         android:label="EditProfileFragment" >
         <action
             android:id="@+id/action_editProfileFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/testFragment"
+        android:name="com.example.launderagent.ui.home.fragment.TestFragment"
+        android:label="TestFragment" >
+        <action
+            android:id="@+id/action_testFragment_to_createServiceFragment"
+            app:destination="@id/createServiceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/basePostFragment"
+        android:name="com.example.launderagent.ui.home.fragment.BasePostFragment"
+        android:label="BasePostFragment" >
+        <action
+            android:id="@+id/action_basePostFragment_to_createServiceFragment"
+            app:destination="@id/createServiceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="com.example.launderagent.ui.home.fragment.OrdersFragment"
+        android:label="OrdersFragment" />
 </navigation>

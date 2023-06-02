@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.launder.HomeActivity">
+    tools:context="com.example.launderagent.HomeActivity">
 
 
     <ProgressBar
@@ -15,9 +15,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/rvCakes"
-        app:layout_constraintStart_toStartOf="@+id/rvCakes"
-        app:layout_constraintTop_toTopOf="@+id/rvCakes" />
+        app:layout_constraintEnd_toEndOf="@+id/container"
+        app:layout_constraintStart_toStartOf="@+id/container"
+        app:layout_constraintTop_toTopOf="@+id/container" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCakes"
