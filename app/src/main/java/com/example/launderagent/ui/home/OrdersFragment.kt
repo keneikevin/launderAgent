@@ -1,4 +1,4 @@
-package com.example.launderagent.ui.home.fragment
+package com.example.launderagent.ui.home
 
 
 import android.os.Bundle
@@ -9,7 +9,7 @@ import androidx.navigation.NavHostController
 import com.bumptech.glide.RequestManager
 import com.example.agent.R
 import com.example.agent.databinding.FragmentOrderBinding
-import com.example.launderagent.ui.auth.AuthViewModel
+import com.example.launderagent.data.MainViewModel
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class OrdersFragment :Fragment(R.layout.fragment_order){
 
     private lateinit var binding: FragmentOrderBinding
-    lateinit var viewModel: AuthViewModel
+    lateinit var viewModel: MainViewModel
     private lateinit var navController: NavHostController
     @Inject
     lateinit var glide: RequestManager
@@ -30,7 +30,7 @@ class OrdersFragment :Fragment(R.layout.fragment_order){
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        viewModel = ViewModelProvider(requireActivity()).get(AuthViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         binding = FragmentOrderBinding.bind(view)
         // Get the NavHostController from the Composable function
         // Create the NavHostController

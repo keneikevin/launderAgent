@@ -1,4 +1,4 @@
-package com.example.launderagent.data
+package com.example.launderagent.other
 
 data class Resouce<out T>(val status: Status, val data: T?, val message: String?) {
     companion object {

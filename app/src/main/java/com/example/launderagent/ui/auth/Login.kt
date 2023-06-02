@@ -25,16 +25,18 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.agent.R
-import com.example.launderagent.HomeActivity
-import com.example.launderagent.data.Resource
-import com.example.launderagent.navigation.ROUTE_LOGIN
-import com.example.launderagent.navigation.ROUTE_SIGNUP
+import com.example.launderagent.activity.HomeActivity
+import com.example.launderagent.data.MainViewModel
+import com.example.launderagent.other.Resource
+import com.example.launderagent.ui.auth.navigation.AuthHeader
+import com.example.launderagent.ui.auth.navigation.ROUTE_LOGIN
+import com.example.launderagent.ui.auth.navigation.ROUTE_SIGNUP
 import com.example.launderagent.ui.theme.AppTheme
 import com.example.launderagent.ui.theme.spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(viewModel: AuthViewModel?, navController: NavController) {
+fun LoginScreen(viewModel: MainViewModel?, navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -158,9 +160,6 @@ fun LoginScreen(viewModel: AuthViewModel?, navController: NavController) {
                     LaunchedEffect(Unit) {
                         context.startActivity(Intent(context, HomeActivity::class.java))
 
-//                        navController.navigate(ROUTE_HOME) {
-//                            popUpTo(ROUTE_LOGIN) { inclusive = true }
-//                        }
                     }
                 }
             }

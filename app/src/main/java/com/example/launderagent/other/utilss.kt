@@ -1,4 +1,4 @@
-package com.example.launderagent.ui.home
+package com.example.launderagent.other
 
 
 import androidx.fragment.app.Fragment

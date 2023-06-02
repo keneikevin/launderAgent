@@ -1,4 +1,4 @@
-package com.example.launderagent.ui.auth
+package com.example.launderagent.ui.auth.navigation
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -30,16 +30,6 @@ fun AuthHeader() {
             contentDescription = stringResource(id = R.string.app_name)
         )
 
-//        Text(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .wrapContentHeight(),
-//              //  .padding(top = spacing.medium),
-//            text = stringResource(id = R.string.app_name),
-//            style = MaterialTheme.typography.headlineMedium,
-//            textAlign = TextAlign.Center,
-//            color = MaterialTheme.colorScheme.onSurface
-//        )
     }
 }
 

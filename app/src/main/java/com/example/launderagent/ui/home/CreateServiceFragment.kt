@@ -1,4 +1,4 @@
-package com.example.launderagent.ui.home.fragment
+package com.example.launderagent.ui.home
 
 import android.Manifest
 import android.app.Activity
@@ -17,10 +17,9 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
 import com.example.agent.R
 import com.example.agent.databinding.FragmentCreateBinding
-import com.example.launderagent.data.Status
-import com.example.launderagent.ui.auth.AuthViewModel
-import com.example.launderagent.ui.home.snackbar
-import com.google.android.material.snackbar.Snackbar
+import com.example.launderagent.other.Status
+import com.example.launderagent.data.MainViewModel
+import com.example.launderagent.other.snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -29,7 +28,7 @@ class CreateServiceFragment : Fragment(R.layout.fragment_create) {
     private lateinit var binding: FragmentCreateBinding
 
 
-    private val viewModel: AuthViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
 
     @Inject
     lateinit var glide: RequestManager

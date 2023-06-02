@@ -5,9 +5,11 @@ import android.util.Log
 import com.example.launderagent.data.entities.Service
 import com.example.launderagent.data.entities.ProfileUpdate
 import com.example.launderagent.data.entities.User
-import com.example.launderagent.data.other.Constants.DEFAULT_PROFILE_PICTURE
-import com.example.launderagent.data.other.Constants.SERVICE_COLLECTION
-import com.example.launderagent.data.other.safeCall
+import com.example.launderagent.other.Constants.DEFAULT_PROFILE_PICTURE
+import com.example.launderagent.other.Constants.SERVICE_COLLECTION
+import com.example.launderagent.other.Resouce
+import com.example.launderagent.other.Resource
+import com.example.launderagent.other.safeCall
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore

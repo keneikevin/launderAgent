@@ -1,7 +1,6 @@
-package com.example.launderagent.ui.home.fragment
+package com.example.launderagent.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,37 +13,34 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.example.agent.R
-import com.example.agent.databinding.FragmentHomeBinding
+import com.example.agent.databinding.FragmentServiceBinding
 import com.example.launderagent.adapterpackage.ServiceAdapter
-import com.example.launderagent.data.Status
-import com.example.launderagent.data.other.DeletePostDialog
-import com.example.launderagent.ui.auth.AuthViewModel
-import com.example.launderagent.ui.auth.HomeViewModel
-import com.example.launderagent.ui.home.snackbar
+import com.example.launderagent.other.Status
+import com.example.launderagent.data.MainViewModel
+import com.example.launderagent.other.snackbar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BasePostFragment : Fragment(R.layout.fragment_home) {
+class ServiceFragment : Fragment(R.layout.fragment_service) {
 
     @Inject
     lateinit var glide:RequestManager
     @Inject
-    lateinit var cakeAdapter: ServiceAdapter
-    private lateinit var binding: FragmentHomeBinding
-    private val basePostViewModel: HomeViewModel by viewModels()
-    private val viewModel: AuthViewModel by viewModels()
+    lateinit var serviveAdapter: ServiceAdapter
+    private lateinit var binding: FragmentServiceBinding
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentHomeBinding.bind(view)
+        binding = FragmentServiceBinding.bind(view)
         subscribeToObservers()
         setUpRecylerView()
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_basePostFragment_to_createServiceFragment)
         }
-        cakeAdapter.notifyDataSetChanged()
+        serviveAdapter.notifyDataSetChanged()
 
 
 
@@ -61,31 +57,32 @@ class BasePostFragment : Fragment(R.layout.fragment_home) {
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val pos = viewHolder.layoutPosition
-            val item = cakeAdapter.posts[pos]
+            val item = serviveAdapter.posts[pos]
 
-            basePostViewModel.deletePost(item)
-            cakeAdapter.posts -=item
+            viewModel.deletePost(item)
+            serviveAdapter.posts -=item
 
             Snackbar.make(requireView(), "Successfully deleted item", Snackbar.LENGTH_LONG).show()
         }
     }
     private fun setUpRecylerView() = binding.rvCakes.apply{
-        cakeAdapter= ServiceAdapter(glide)
-        binding.rvCakes.adapter = cakeAdapter
+        viewModel.getPosts()
+        serviveAdapter= ServiceAdapter(glide)
+        binding.rvCakes.adapter = serviveAdapter
         binding.rvCakes.layoutManager = LinearLayoutManager(requireContext())
 
-        adapter=cakeAdapter
+        adapter=serviveAdapter
         layoutManager = LinearLayoutManager(requireContext())
         itemAnimator = null
 
         ItemTouchHelper(itemTouchCallback).attachToRecyclerView(this)
-        cakeAdapter.notifyDataSetChanged()
+        serviveAdapter.notifyDataSetChanged()
     }
 
 
         private fun subscribeToObservers(){
 
-            basePostViewModel.deletePostStatus.observe(viewLifecycleOwner, Observer {  result ->
+            viewModel.deletePostStatus.observe(viewLifecycleOwner, Observer { result ->
                 result?.let {
                     when (result.status) {
                         Status.SUCCESS ->{}
@@ -95,8 +92,21 @@ class BasePostFragment : Fragment(R.layout.fragment_home) {
                     }
                 }
             })
-            basePostViewModel.post.observe(viewLifecycleOwner, Observer {
-                cakeAdapter.posts = it
+
+            viewModel.posts.observe(viewLifecycleOwner, Observer { result ->
+                result?.let {
+                    when (result.status) {
+                        Status.SUCCESS ->{
+                            serviveAdapter.posts = it.data!!
+                            binding.progressBar.visibility =  View.GONE
+                        }
+                        Status.ERROR ->{
+                            binding.progressBar.visibility = View.GONE
+                            snackbar(it.message.toString())
+                        }
+                        Status.LOADING ->{binding.progressBar.visibility = View.VISIBLE}
+                    }
+                }
 
             })
 

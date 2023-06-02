@@ -1,4 +1,4 @@
-package com.example.launderagent.data.other
+package com.example.launderagent.other
 
 import android.app.Dialog
 import android.os.Bundle

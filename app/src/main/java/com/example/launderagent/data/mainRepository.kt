@@ -5,6 +5,8 @@ import android.net.Uri
 import com.example.launderagent.data.entities.Service
 import com.example.launderagent.data.entities.ProfileUpdate
 import com.example.launderagent.data.entities.User
+import com.example.launderagent.other.Resouce
+import com.example.launderagent.other.Resource
 
 interface mainRepository {
     val currentUser: FirebaseUser?
@@ -13,7 +15,7 @@ interface mainRepository {
     suspend fun updateProfilePicture(uid:String, imageUri: Uri):Uri?
     suspend fun login(email: String, password: String): Resource<FirebaseUser>
 
-    suspend fun updateProfile(profileUpdate: ProfileUpdate):Resouce<Any>
+    suspend fun updateProfile(profileUpdate: ProfileUpdate): Resouce<Any>
 
     suspend fun deletePost(post: Service): Resouce<Service>
 

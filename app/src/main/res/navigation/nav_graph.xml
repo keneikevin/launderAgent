@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.launderagent.ui.home.fragment.ProfileFragment"
+        android:name="com.example.launderagent.ui.home.ProfileFragment"
         android:label="ProfileFragment" >
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
@@ -27,11 +27,11 @@
         android:label="ShoppingFragment" />
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.example.launderagent.ui.home.fragment.TrackingFragment"
+        android:name="com.example.launderagent.ui.home.DeliverFragment"
         android:label="MapFragment" />
     <fragment
         android:id="@+id/createServiceFragment"
-        android:name="com.example.launderagent.ui.home.fragment.CreateServiceFragment"
+        android:name="com.example.launderagent.ui.home.CreateServiceFragment"
         android:label="CreateServiceFragment" >
         <action
             android:id="@+id/action_createServiceFragment_to_homeFragment"
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.example.launderagent.ui.home.fragment.EditProfileFragment"
+        android:name="com.example.launderagent.ui.home.EditProfileFragment"
         android:label="EditProfileFragment" >
         <action
             android:id="@+id/action_editProfileFragment_to_profileFragment"
@@ -61,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/basePostFragment"
-        android:name="com.example.launderagent.ui.home.fragment.BasePostFragment"
+        android:name="com.example.launderagent.ui.home.ServiceFragment"
         android:label="BasePostFragment" >
         <action
             android:id="@+id/action_basePostFragment_to_createServiceFragment"
@@ -69,6 +69,6 @@
     </fragment>
     <fragment
         android:id="@+id/ordersFragment"
-        android:name="com.example.launderagent.ui.home.fragment.OrdersFragment"
+        android:name="com.example.launderagent.ui.home.OrdersFragment"
         android:label="OrdersFragment" />
 </navigation>

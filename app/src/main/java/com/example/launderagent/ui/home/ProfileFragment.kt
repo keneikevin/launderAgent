@@ -1,4 +1,4 @@
-package com.example.launderagent.ui.home.fragment
+package com.example.launderagent.ui.home
 
 
 import android.content.Intent
@@ -12,10 +12,10 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
 import com.example.agent.R
 import com.example.agent.databinding.FragmentProfileBinding
-import com.example.launderagent.MainActivity
-import com.example.launderagent.data.Status
-import com.example.launderagent.ui.auth.AuthViewModel
-import com.example.launderagent.ui.home.snackbar
+import com.example.launderagent.activity.MainActivity
+import com.example.launderagent.other.Status
+import com.example.launderagent.data.MainViewModel
+import com.example.launderagent.other.snackbar
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -25,7 +25,7 @@ import javax.inject.Inject
 class ProfileFragment :Fragment(R.layout.fragment_profile){
 
     private lateinit var binding: FragmentProfileBinding
-    lateinit var viewModel: AuthViewModel
+    lateinit var viewModel: MainViewModel
     private lateinit var navController: NavHostController
     @Inject
     lateinit var glide: RequestManager
@@ -36,7 +36,7 @@ class ProfileFragment :Fragment(R.layout.fragment_profile){
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        viewModel = ViewModelProvider(requireActivity()).get(AuthViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         binding = FragmentProfileBinding.bind(view)
         // Get the NavHostController from the Composable function
         // Create the NavHostController
@@ -70,12 +70,15 @@ class ProfileFragment :Fragment(R.layout.fragment_profile){
                         binding.eTime.text= it.data?.time
                         glide.load(it.data?.profilePictureUrl).into(binding.bigImage)
                         binding.progressBar.visibility =  View.GONE
+                        binding.vvie.visibility =  View.VISIBLE
                     }
                     Status.ERROR ->{
                         binding.progressBar.visibility = View.GONE
+                        binding.vvie.visibility =  View.VISIBLE
                         snackbar(it.message.toString())
                     }
-                    Status.LOADING ->{binding.progressBar.visibility = View.VISIBLE}
+                    Status.LOADING ->{binding.progressBar.visibility = View.VISIBLE
+                        binding.vvie.visibility =  View.GONE}
                 }
             }
 

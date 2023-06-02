@@ -1,4 +1,4 @@
-package com.example.launderagent
+package com.example.launderagent.activity
 
 import android.os.Bundle
 import android.view.View
@@ -9,13 +9,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.agent.R
 import com.example.agent.databinding.ActivityHomeBinding
-import com.example.launderagent.ui.auth.AuthViewModel
+import com.example.launderagent.data.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
-    private val viewModel by viewModels<AuthViewModel>()
+    private val viewModel by viewModels<MainViewModel>()
 //    override fun onBackPressed() {
 //        super.onBackPressed()
 //        moveTaskToBack(true)

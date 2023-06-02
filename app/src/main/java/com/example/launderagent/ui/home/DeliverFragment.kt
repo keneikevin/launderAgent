@@ -1,4 +1,4 @@
-package com.example.launderagent.ui.home.fragment
+package com.example.launderagent.ui.home
 
 
 import android.graphics.Color
@@ -7,8 +7,8 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.agent.R
-import com.example.agent.databinding.FragmentTrackingBinding
-import com.example.launderagent.ui.auth.AuthViewModel
+import com.example.agent.databinding.FragmentDeliverBinding
+import com.example.launderagent.data.MainViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -18,10 +18,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class TrackingFragment :Fragment(R.layout.fragment_tracking){
+class DeliverFragment :Fragment(R.layout.fragment_deliver){
 
-    private lateinit var binding: FragmentTrackingBinding
-    lateinit var viewModel: AuthViewModel
+    private lateinit var binding: FragmentDeliverBinding
+    lateinit var viewModel: MainViewModel
     private lateinit var map:GoogleMap
     private var isTracking = false
     private var pathPoints = mutableListOf<Polyline>()
@@ -31,9 +31,9 @@ class TrackingFragment :Fragment(R.layout.fragment_tracking){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        binding = FragmentTrackingBinding.bind(view)
+        binding = FragmentDeliverBinding.bind(view)
         binding.mapView.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(AuthViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
 
         binding.mapView.getMapAsync {

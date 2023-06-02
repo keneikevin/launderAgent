@@ -1,6 +1,6 @@
 package com.example.launderagent.data.entities
 
-import com.example.launderagent.data.other.Constants.DEFAULT_PROFILE_PICTURE
+import com.example.launderagent.other.Constants.DEFAULT_PROFILE_PICTURE
 import com.google.firebase.firestore.IgnoreExtraProperties
 
 @IgnoreExtraProperties

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
-import com.example.agent.databinding.CardBinding
+import com.example.agent.databinding.ServiceBinding
 import com.example.launderagent.data.entities.Service
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
@@ -17,7 +17,7 @@ class ServiceAdapter @Inject constructor(
     private val glide: RequestManager
 ) : RecyclerView.Adapter<ServiceAdapter.PostViewHolder>() {
 
-    class PostViewHolder(val binding: CardBinding) : RecyclerView.ViewHolder(binding.root) {
+    class PostViewHolder(val binding: ServiceBinding) : RecyclerView.ViewHolder(binding.root) {
         val ivPostImage: ImageView = binding.img
         val tvPostAuthor: TextView = binding.textName
         val tvPostText: TextView = binding.textPrice
@@ -43,7 +43,7 @@ class ServiceAdapter @Inject constructor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         return PostViewHolder(
-            CardBinding.inflate(
+            ServiceBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false

@@ -1,4 +1,4 @@
-package com.example.launderagent.ui.home.fragment
+package com.example.launderagent.ui.home
 
 import android.Manifest
 import android.app.Activity
@@ -19,10 +19,10 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
 import com.example.agent.R
 import com.example.agent.databinding.FragmentEditprofileBinding
-import com.example.launderagent.data.Status
+import com.example.launderagent.other.Status
 import com.example.launderagent.data.entities.ProfileUpdate
-import com.example.launderagent.ui.auth.AuthViewModel
-import com.example.launderagent.ui.home.snackbar
+import com.example.launderagent.data.MainViewModel
+import com.example.launderagent.other.snackbar
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 //import kotlinx.android.synthetic.main.activity_main.*
@@ -31,7 +31,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class EditProfileFragment : Fragment(R.layout.fragment_editprofile) {
     private lateinit var binding: FragmentEditprofileBinding
-    private val viewModel: AuthViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
     @Inject
     lateinit var glide: RequestManager
     lateinit var auth: FirebaseAuth

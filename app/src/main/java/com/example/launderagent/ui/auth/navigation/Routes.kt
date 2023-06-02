@@ -1,4 +1,4 @@
-package com.example.launderagent.navigation
+package com.example.launderagent.ui.auth.navigation
 
 const val ROUTE_LOGIN = "login"
 const val ROUTE_SIGNUP = "signup"
