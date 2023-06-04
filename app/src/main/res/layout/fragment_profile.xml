@@ -40,43 +40,37 @@
         android:id="@+id/etShoppingItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="@string/name"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/big_image"
-        app:layout_constraintStart_toStartOf="@+id/big_image"
-        app:layout_constraintTop_toBottomOf="@+id/big_image" />
+        tools:layout_editor_absoluteX="42dp"
+        tools:layout_editor_absoluteY="270dp" />
 
     <TextView
         android:id="@+id/eEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="email"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/etShoppingItemName"
-        app:layout_constraintStart_toStartOf="@+id/etShoppingItemName"
-        app:layout_constraintTop_toBottomOf="@+id/etShoppingItemName" />
+        tools:layout_editor_absoluteX="178dp"
+        tools:layout_editor_absoluteY="280dp" />
 
     <TextView
         android:id="@+id/ePhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="@string/phone"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/etShoppingItemName"
-        app:layout_constraintStart_toStartOf="@+id/etShoppingItemName"
-        app:layout_constraintTop_toBottomOf="@+id/eEmail" />
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="320dp" />
+
     <TextView
         android:id="@+id/eTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="time"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/etShoppingItemName"
-        app:layout_constraintStart_toStartOf="@+id/etShoppingItemName"
-        app:layout_constraintTop_toBottomOf="@+id/ePhone" />
+        tools:layout_editor_absoluteX="189dp"
+        tools:layout_editor_absoluteY="353dp" />
 
     <ImageView
         android:id="@+id/btnAddShoppingItem"

@@ -74,7 +74,7 @@ class CreateServiceFragment : Fragment(R.layout.fragment_create) {
         binding.btnPost.setOnClickListener {
 
             curImageUri?.let { uri ->
-                viewModel.createPost(uri, binding.etCakeName.text.toString(),binding.etPriceName.text.toString(),stringArray[numberPicker.value])
+                viewModel.createService(uri, binding.etCakeName.text.toString(),binding.etPriceName.text.toString(),stringArray[numberPicker.value])
             } ?: snackbar(getString(R.string.error_no_image_chosen))
         }
     }
@@ -122,7 +122,7 @@ class CreateServiceFragment : Fragment(R.layout.fragment_create) {
     }
 
     private fun subscribeToObservers() {
-        viewModel.createPostStatus.observe(viewLifecycleOwner, Observer { result ->
+        viewModel.createServiceStatus.observe(viewLifecycleOwner, Observer { result ->
             result?.let {
                 when (result.status) {
                     Status.SUCCESS ->{

@@ -35,7 +35,7 @@ class OrdersFragment :Fragment(R.layout.fragment_order){
         // Get the NavHostController from the Composable function
         // Create the NavHostController
         navController = NavHostController(this.requireActivity())
-        viewModel.loadProfile(uid)
+        viewModel.loadOrder(uid)
 
 
     }

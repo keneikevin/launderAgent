@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
 import com.example.agent.R
 import com.example.agent.databinding.FragmentProfileBinding
+import com.example.agent.databinding.FragmentTestBinding
 import com.example.launderagent.activity.MainActivity
 import com.example.launderagent.other.Status
 import com.example.launderagent.data.MainViewModel
@@ -22,9 +23,9 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ProfileFragment :Fragment(R.layout.fragment_profile){
+class ProfileFragment :Fragment(R.layout.fragment_test){
 
-    private lateinit var binding: FragmentProfileBinding
+    private lateinit var binding: FragmentTestBinding
     lateinit var viewModel: MainViewModel
     private lateinit var navController: NavHostController
     @Inject
@@ -37,7 +38,7 @@ class ProfileFragment :Fragment(R.layout.fragment_profile){
         setHasOptionsMenu(true)
 
         viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
-        binding = FragmentProfileBinding.bind(view)
+        binding = FragmentTestBinding.bind(view)
         // Get the NavHostController from the Composable function
         // Create the NavHostController
         navController = NavHostController(this.requireActivity())
@@ -70,15 +71,20 @@ class ProfileFragment :Fragment(R.layout.fragment_profile){
                         binding.eTime.text= it.data?.time
                         glide.load(it.data?.profilePictureUrl).into(binding.bigImage)
                         binding.progressBar.visibility =  View.GONE
+                        binding.vviee.visibility =  View.VISIBLE
                         binding.vvie.visibility =  View.VISIBLE
                     }
                     Status.ERROR ->{
                         binding.progressBar.visibility = View.GONE
                         binding.vvie.visibility =  View.VISIBLE
+                        binding.vviee.visibility =  View.VISIBLE
                         snackbar(it.message.toString())
                     }
-                    Status.LOADING ->{binding.progressBar.visibility = View.VISIBLE
-                        binding.vvie.visibility =  View.GONE}
+                    Status.LOADING ->{
+                        binding.progressBar.visibility = View.VISIBLE
+                        binding.vvie.visibility =  View.GONE
+                        binding.vviee.visibility =  View.GONE
+                    }
                 }
             }
 

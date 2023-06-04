@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.agent.R
+import com.example.launderagent.data.entities.Order
 import com.example.launderagent.other.Resouce
 import com.example.launderagent.other.Resource
 import com.example.launderagent.data.entities.ProfileUpdate
@@ -44,8 +45,13 @@ class MainViewModel @Inject constructor(
     private val _profileMeta = MutableLiveData<Resouce<User>>()
     val profileMeta: LiveData<Resouce<User>> = _profileMeta
 
-    private val _createPostStatus = MutableLiveData<Resouce<Any>>()
-    val createPostStatus: LiveData<Resouce<Any>> = _createPostStatus
+    private val _order = MutableLiveData<Resouce<Order>>()
+    val order: LiveData<Resouce<Order>> = _order
+
+    private val _createServiceStatus = MutableLiveData<Resouce<Any>>()
+    val createServiceStatus: LiveData<Resouce<Any>> = _createServiceStatus
+   private val _bookServiceStatus = MutableLiveData<Resouce<Any>>()
+    val bookServiceStatus: LiveData<Resouce<Any>> = _bookServiceStatus
 
 
 
@@ -53,17 +59,17 @@ class MainViewModel @Inject constructor(
     val curImageUri: LiveData<Uri> = _curImageUri
 
 
-    private val _deletePostStatus = MutableLiveData<Resouce<Service>>()
-    val deletePostStatus: LiveData<Resouce<Service>> = _deletePostStatus
+    private val _deleteServiceStatus = MutableLiveData<Resouce<Service>>()
+    val deleteServiceStatus: LiveData<Resouce<Service>> = _deleteServiceStatus
 
-    private val _posts = MutableLiveData<Resouce<List<Service>>>()
-    val posts: LiveData<Resouce<List<Service>>> = _posts
+    private val _services = MutableLiveData<Resouce<List<Service>>>()
+    val services: LiveData<Resouce<List<Service>>> = _services
 
     val currentUser: FirebaseUser?
         get() = repository.currentUser
 
 
-    val serviceList: MutableList<Service> = mutableListOf()
+    var serviceList: MutableList<Service> = mutableListOf()
 
     init {
         if(repository.currentUser != null){
@@ -71,22 +77,20 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getPosts() {
-        _posts.postValue((Resouce.loading(null)))
+    fun getService() {
+        _services.postValue((Resouce.loading(null)))
 
         viewModelScope.launch(dispatcher){
-            val result = repository.getPostsForFollows()
-
-
-            _posts.postValue((result))
+            val result = repository.getServices()
+            _services.postValue((result))
         }
     }
-    fun deletePost(post: Service) {
-        _deletePostStatus.postValue((Resouce.loading(null)))
+    fun deleteService(post: Service) {
+        _deleteServiceStatus.postValue((Resouce.loading(null)))
 
         viewModelScope.launch(dispatcher) {
-            val result = repository.deletePost(post)
-            _deletePostStatus.postValue((result))
+            val result = repository.deleteService(post)
+            _deleteServiceStatus.postValue((result))
         }
     }
 
@@ -119,9 +123,16 @@ class MainViewModel @Inject constructor(
         _profileMeta.postValue((Resouce.loading(null)))
         viewModelScope.launch(dispatcher) {
             val result = repository.getUser(uid)
-            val esult = repository.getUser(uid).data.toString()
             _profileMeta.postValue((result))
-            Log.d("succssess",esult)
+        }
+        //getPosts(uid)
+    }
+    fun loadOrder(uid: String) {
+        _profileMeta.postValue((Resouce.loading(null)))
+        viewModelScope.launch(dispatcher) {
+            val result = repository.getOrder(uid)
+            _order.postValue((result))
+            Log.d("gaga", order.value?.data.toString())
         }
         //getPosts(uid)
     }
@@ -143,17 +154,34 @@ class MainViewModel @Inject constructor(
     fun setCurImageUri(uri: Uri) {
         _curImageUri.postValue(uri)
     }
-    fun createPost(imageUri: Uri, name:String,price:String,per:String){
+    fun createService(imageUri: Uri, name:String, price:String, per:String){
         if (name.isEmpty() || price.isEmpty()){
             val error = applicationContext.getString(R.string.error_fill)
-            _createPostStatus.postValue((Resouce.error(error,null)))
+            _createServiceStatus.postValue((Resouce.error(error,null)))
         } else{
-            _createPostStatus.postValue(((Resouce.loading(null))))
+            _createServiceStatus.postValue(((Resouce.loading(null))))
             viewModelScope.launch(dispatcher) {
-                val result = repository.createPot(imageUri,name,price,per)
-                _createPostStatus.postValue((result))
+                val result = repository.createService(imageUri,name,price,per)
+                _createServiceStatus.postValue((result))
             }
         }
     }
+    fun bookServices(code: String,status:String,bookTime: String,completeTime: String, prise:String){
+        _bookServiceStatus.postValue(((Resouce.loading(null))))
+        viewModelScope.launch(dispatcher) {
+            val res = repository.getServices()
+            val result = res.data?.let {
+                repository.bookServices(
+                    code,
+                    status,
+                    bookTime,
+                    completeTime,
+                    prise,
+                    services = it
+                )
+            }
 
+            _bookServiceStatus.postValue((result))
+        }
+    }
 }

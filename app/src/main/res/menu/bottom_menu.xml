@@ -5,15 +5,11 @@
     <item
         android:id="@+id/ordersFragment"
         android:title="Orders"
-        android:icon="@drawable/home"
+        android:icon="@drawable/order"
         />
+
     <item
-        android:id="@+id/mapFragment"
-        android:title="Map"
-        android:icon="@drawable/map"
-        />
-    <item
-        android:id="@+id/serviceFragment"
+        android:id="@+id/customersServiceFragment"
         android:title="Services"
         android:icon="@drawable/service"
         />

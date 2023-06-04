@@ -14,11 +14,11 @@ import com.example.launderagent.data.entities.Service
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
-class ServiceAdapter @Inject constructor(
+class ServiceCustomerAdapter @Inject constructor(
     private val glide: RequestManager
-) : RecyclerView.Adapter<ServiceAdapter.PostViewHolder>() {
+) : RecyclerView.Adapter<ServiceCustomerAdapter.PostViewHolder>() {
 
-    class PostViewHolder(val binding: ServiceBinding) : RecyclerView.ViewHolder(binding.root) {
+    class PostViewHolder(val binding: ServiceCustomerBinding) : RecyclerView.ViewHolder(binding.root) {
         val ivPostImage: ImageView = binding.img
         val tvPostAuthor: TextView = binding.textName
         val tvPostText: TextView = binding.textPrice
@@ -44,7 +44,7 @@ class ServiceAdapter @Inject constructor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         return PostViewHolder(
-            ServiceBinding.inflate(
+            ServiceCustomerBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false

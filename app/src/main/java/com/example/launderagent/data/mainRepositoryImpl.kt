@@ -2,6 +2,7 @@ package com.example.launderagent.data
 
 import android.net.Uri
 import android.util.Log
+import com.example.launderagent.data.entities.Order
 import com.example.launderagent.data.entities.Service
 import com.example.launderagent.data.entities.ProfileUpdate
 import com.example.launderagent.data.entities.User
@@ -29,7 +30,7 @@ class mainRepositoryImpl @Inject constructor(
     private val firestore = FirebaseFirestore.getInstance()
     private val storage = Firebase.storage
     private val cakes = firestore.collection(SERVICE_COLLECTION)
-
+    private val orders = firestore.collection("oders")
     private val users = firestore.collection("users")
 
     override val currentUser: FirebaseUser?
@@ -44,7 +45,27 @@ class mainRepositoryImpl @Inject constructor(
             Resource.Error(e.localizedMessage)
         }
     }
-    override suspend fun createPot(imageUri: Uri,name: String, prise:String,per:String) = withContext(Dispatchers.IO) {
+    override suspend fun bookServices(code: String,status:String,bookTime: String,completeTime: String, prise:String, services:List<Service>) = withContext(Dispatchers.IO) {
+        safeCall {
+           val uid = firebaseAuth.uid!!
+            val oderId = UUID.randomUUID().toString()
+//            val imageUploadResult = storage.getReference(postId).putFile(imageUri).await()
+//            val imageUrl = imageUploadResult?.metadata?.reference?.downloadUrl?.await().toString()
+            val post = Order(
+                code = code,
+                price = prise,
+                orderUid = uid,
+                bookTime = bookTime,
+                completeTime = completeTime,
+                status = status,
+                services = services
+            )
+            orders.document(oderId).set(post).await()
+            Resouce.success(Any())
+        }
+    }
+
+    override suspend fun createService(imageUri: Uri, name: String, prise:String, per:String) = withContext(Dispatchers.IO) {
         safeCall {
             val uid = firebaseAuth.uid!!
             val postId = UUID.randomUUID().toString()
@@ -74,7 +95,7 @@ class mainRepositoryImpl @Inject constructor(
 
             storageRef.putFile(imageUri).await().metadata?.reference?.downloadUrl?.await()
         }
-    override suspend fun deletePost(post: Service) = withContext(Dispatchers.IO) {
+    override suspend fun deleteService(post: Service) = withContext(Dispatchers.IO) {
         safeCall {
             cakes.document(post.mediaId).delete().await()
             storage.getReferenceFromUrl(post.img).delete().await()
@@ -124,6 +145,14 @@ class mainRepositoryImpl @Inject constructor(
             Resouce.success(user)
         }
     }
+    override suspend fun getOrder(uid: String) = withContext(Dispatchers.IO) {
+        safeCall {
+            val order = orders.document(uid).get().await().toObject(Order::class.java)
+                ?: throw IllegalStateException()
+            Log.d("hgshgsdada", order.toString())
+            Resouce.success(order)
+        }
+    }
 
     override suspend fun signup(name: String, email: String, password: String,phone: String): Resource<FirebaseUser> {
         return try {
@@ -141,9 +170,9 @@ class mainRepositoryImpl @Inject constructor(
             Resource.Error(e.localizedMessage)
         }
     }
-    override suspend fun getPostsForFollows() = withContext(Dispatchers.IO) {
+    override suspend fun getServices() = withContext(Dispatchers.IO) {
         safeCall {
-            val uid = FirebaseAuth.getInstance().uid!!
+            val uid = FirebaseAuth.getInstance().currentUser?.uid
 
 
             val allPosts = cakes.whereEqualTo("authorUid", uid)

@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graqph"
-    app:startDestination="@id/serviceFragment">
+    app:startDestination="@id/customersServiceFragment">
 
     <fragment
         android:id="@+id/profileFragment"
@@ -10,13 +10,12 @@
         android:label="ProfileFragment" >
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
-            app:destination="@id/editProfileFragment" />
+            app:destination="@id/editProfileFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
-    <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.example.launderagent.ui.home.DeliverFragment"
-        android:label="MapFragment" />
+
     <fragment
         android:id="@+id/createServiceFragment"
         android:name="com.example.launderagent.ui.home.CreateServiceFragment"
@@ -47,4 +46,8 @@
             android:id="@+id/action_serviceFragment_to_createServiceFragment"
             app:destination="@id/createServiceFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/customersServiceFragment"
+        android:name="com.example.launderagent.ui.home.CustomersServiceFragment"
+        android:label="CustomersServiceFragment" />
 </navigation>
