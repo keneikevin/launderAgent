@@ -1,4 +1,4 @@
-package com.example.launderagent.ui.home
+package com.example.launderagent.ui.home.agent
 
 import android.Manifest
 import android.app.Activity

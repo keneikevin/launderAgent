@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
-import com.example.agent.databinding.ServiceBinding
 import com.example.agent.databinding.ServiceCustomerBinding
 import com.example.launderagent.data.entities.Service
+import com.example.launderagent.ui.home.customer.CustomersServiceFragmentDirections
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
@@ -22,7 +23,7 @@ class ServiceCustomerAdapter @Inject constructor(
         val ivPostImage: ImageView = binding.img
         val tvPostAuthor: TextView = binding.textName
         val tvPostText: TextView = binding.textPrice
-        val tvPer: TextView = binding.per
+       // val tvPer: TextView = binding.per
         val cad = binding.cad
     }
 
@@ -57,14 +58,17 @@ class ServiceCustomerAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        val post = posts[position]
+        val service = posts[position]
         holder.apply {
-            glide.load(post.img).into(ivPostImage)
-            tvPostAuthor.text = post.title
-            tvPostText.text = post.price
-            tvPer.text = post.per
+            glide.load(service.img).into(ivPostImage)
+            tvPostAuthor.text = service.title
+            var pr = "Ksh: ${service.price} "+"/ "+"${service.per}"
+            tvPostText.text = pr
+           // tvPer.text = post.per
             cad.setOnClickListener {
-                Snackbar.make(this.itemView, "Swipe to delete", Snackbar.LENGTH_SHORT).show()
+                val directions= CustomersServiceFragmentDirections.actionCustomersServiceFragmentToDetailFragment(service)
+                it.findNavController().navigate(directions)
+                Snackbar.make(this.itemView, "Swipe", Snackbar.LENGTH_SHORT).show()
             }
 
         }

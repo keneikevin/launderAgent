@@ -30,6 +30,7 @@
     <string name="delete_post_dialog_negative">No</string>
     <string name="delete_post_dialog_title">Do you want to delete that post?</string>
     <string name="add_service">add Service</string>
+    <string name="cart">Cart</string>
 
     <string-array name="locations">
         <item>Java</item>

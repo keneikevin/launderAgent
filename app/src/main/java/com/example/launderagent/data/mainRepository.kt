@@ -2,9 +2,11 @@ package com.example.launderagent.data
 
 import com.google.firebase.auth.FirebaseUser
 import android.net.Uri
+import androidx.lifecycle.LiveData
 import com.example.launderagent.data.entities.Order
 import com.example.launderagent.data.entities.Service
 import com.example.launderagent.data.entities.ProfileUpdate
+import com.example.launderagent.data.entities.ShoppingItem
 import com.example.launderagent.data.entities.User
 import com.example.launderagent.other.Resouce
 import com.example.launderagent.other.Resource
@@ -32,4 +34,11 @@ interface mainRepository {
     suspend fun bookServices(code: String,status:String,bookTime: String,completeTime: String, prise:String, services:List<Service>): Resouce<Any>
 
     suspend fun getOrder(uid: String): Resouce<Order>
+    suspend fun insertShoppingItem(shoppingItem: ShoppingItem)
+
+    suspend fun deleteShoppingItem(shoppingItem: ShoppingItem)
+
+    fun observeAllShoppingItems(): LiveData<List<ShoppingItem>>
+
+    fun observeTotalPrice(): LiveData<Float>
 }

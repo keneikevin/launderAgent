@@ -2,10 +2,13 @@ package com.example.launderagent.data
 
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.LiveData
 import com.example.launderagent.data.entities.Order
 import com.example.launderagent.data.entities.Service
 import com.example.launderagent.data.entities.ProfileUpdate
+import com.example.launderagent.data.entities.ShoppingItem
 import com.example.launderagent.data.entities.User
+import com.example.launderagent.data.local.ShoppingDao
 import com.example.launderagent.other.Constants.DEFAULT_PROFILE_PICTURE
 import com.example.launderagent.other.Constants.SERVICE_COLLECTION
 import com.example.launderagent.other.Resouce
@@ -23,8 +26,8 @@ import java.util.*
 import javax.inject.Inject
 
 class mainRepositoryImpl @Inject constructor(
-    private val firebaseAuth: FirebaseAuth
-
+    private val firebaseAuth: FirebaseAuth,
+    private val shoppingDao: ShoppingDao
 ) : mainRepository {
     var db = FirebaseFirestore.getInstance()
     private val firestore = FirebaseFirestore.getInstance()
@@ -152,6 +155,24 @@ class mainRepositoryImpl @Inject constructor(
             Log.d("hgshgsdada", order.toString())
             Resouce.success(order)
         }
+    }
+    override suspend fun insertShoppingItem(shoppingItem: ShoppingItem) {
+        shoppingDao.insertShoppingItem(shoppingItem)
+    }
+
+    override suspend fun deleteShoppingItem(shoppingItem: ShoppingItem) {
+        shoppingDao.deleteShoppingItem(shoppingItem)
+    }
+
+    override fun observeAllShoppingItems(): LiveData<List<ShoppingItem>> {
+        val ua = shoppingDao.observeAllShoppingItems()
+        return shoppingDao.observeAllShoppingItems()
+
+
+    }
+
+    override fun observeTotalPrice(): LiveData<Float> {
+        return shoppingDao.observeTotalPrice()
     }
 
     override suspend fun signup(name: String, email: String, password: String,phone: String): Resource<FirebaseUser> {

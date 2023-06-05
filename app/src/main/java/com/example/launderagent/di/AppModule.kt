@@ -1,12 +1,15 @@
 package com.example.launderagent.di
 
 import android.content.Context
+import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.example.agent.R
+import com.example.launderagent.data.local.ShoppingItemDatabase
 import com.example.launderagent.data.mainRepository
 import com.example.launderagent.data.mainRepositoryImpl
+import com.example.launderagent.other.Constants.DATABASE_NAME
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
@@ -43,4 +46,17 @@ class AppModule {
     )
     @Provides
     fun provideMainDispatcher() = Dispatchers.Main as CoroutineDispatcher
+
+
+    @Provides
+    fun provideShoppingItemDataBase(
+        @ApplicationContext context: Context
+    )= Room.databaseBuilder(context, ShoppingItemDatabase::class.java, DATABASE_NAME).fallbackToDestructiveMigration().build()
+
+
+    @Provides
+    fun provideShoppingDao(
+        database:ShoppingItemDatabase
+    ) = database.shoppingDao()
+
 }
