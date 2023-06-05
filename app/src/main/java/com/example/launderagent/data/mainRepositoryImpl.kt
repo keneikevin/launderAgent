@@ -202,14 +202,24 @@ class mainRepositoryImpl @Inject constructor(
                 .await()
 
                 .toObjects(Service::class.java)
-//                .onEach { post ->
-//                    val user = getUser(post.authorUid).data!!
-//                    post.img = user.profilePictureUrl
-//                    post.title = user.username
-//                    post.price = user.phone
-//                }
 
             Log.d("dadada", allPosts.toString())
+            Resouce.success(allPosts)
+        }
+    }
+
+    override suspend fun getUsers()= withContext(Dispatchers.IO) {
+        safeCall {
+            val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+
+            val allPosts = users
+                //  .orderBy("date", Query.Direction.DESCENDING)
+                .get()
+                .await()
+
+                .toObjects(User::class.java)
+
             Resouce.success(allPosts)
         }
     }

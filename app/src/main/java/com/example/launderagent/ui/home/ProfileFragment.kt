@@ -11,7 +11,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
 import com.example.agent.R
-import com.example.agent.databinding.FragmentProfileBinding
 import com.example.agent.databinding.FragmentTestBinding
 import com.example.launderagent.activity.MainActivity
 import com.example.launderagent.other.Status
@@ -32,6 +31,11 @@ class ProfileFragment :Fragment(R.layout.fragment_test){
     lateinit var glide: RequestManager
     protected open val uid:String
         get() = FirebaseAuth.getInstance().uid!!
+
+
+
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

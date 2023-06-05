@@ -1,7 +1,5 @@
 package com.example.launderagent.other
 
-import androidx.compose.ui.graphics.Color
-
 object Constants {
 
 

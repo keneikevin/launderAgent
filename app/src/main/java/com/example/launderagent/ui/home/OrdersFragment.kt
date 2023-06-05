@@ -2,10 +2,14 @@ package com.example.launderagent.ui.home
 
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
 import com.example.agent.R
 import com.example.agent.databinding.FragmentOrderBinding
@@ -26,6 +30,26 @@ class OrdersFragment :Fragment(R.layout.fragment_order){
     protected open val uid:String
         get() = FirebaseAuth.getInstance().uid!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.cart_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_cart -> {
+                findNavController().navigate(R.id.action_ordersFragment_to_shoppingFragment)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)

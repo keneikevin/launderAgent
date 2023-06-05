@@ -65,6 +65,9 @@ class MainViewModel @Inject constructor(
     private val _services = MutableLiveData<Resouce<List<Service>>>()
     val services: LiveData<Resouce<List<Service>>> = _services
 
+    private val _users = MutableLiveData<Resouce<List<User>>>()
+    val users: LiveData<Resouce<List<User>>> = _users
+
     val currentUser: FirebaseUser?
         get() = repository.currentUser
 
@@ -77,6 +80,14 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun getUsers() {
+        _users.postValue((Resouce.loading(null)))
+
+        viewModelScope.launch(dispatcher){
+            val result = repository.getUsers()
+            _users.postValue((result))
+        }
+    }
     fun getService() {
         _services.postValue((Resouce.loading(null)))
 

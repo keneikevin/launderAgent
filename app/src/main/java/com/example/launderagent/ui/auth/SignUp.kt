@@ -29,7 +29,6 @@ import com.example.launderagent.activity.HomeActivity
 import com.example.launderagent.data.MainViewModel
 import com.example.launderagent.other.Resource
 import com.example.launderagent.ui.auth.navigation.AuthHeader
-import com.example.launderagent.ui.auth.navigation.ROUTE_HOME
 import com.example.launderagent.ui.auth.navigation.ROUTE_LOGIN
 import com.example.launderagent.ui.auth.navigation.ROUTE_SIGNUP
 import com.example.launderagent.ui.theme.AppTheme

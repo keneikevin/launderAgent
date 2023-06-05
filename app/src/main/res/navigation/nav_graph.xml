@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graqph"
-    app:startDestination="@id/customersServiceFragment">
+    app:startDestination="@id/serviceFragment">
 
     <fragment
         android:id="@+id/profileFragment"
@@ -13,6 +13,9 @@
             app:destination="@id/editProfileFragment"
             app:popUpTo="@id/profileFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_profileFragment_to_shoppingFragment"
+            app:destination="@id/shoppingFragment" />
     </fragment>
 
 
@@ -37,7 +40,11 @@
     <fragment
         android:id="@+id/ordersFragment"
         android:name="com.example.launderagent.ui.home.OrdersFragment"
-        android:label="OrdersFragment" />
+        android:label="OrdersFragment" >
+        <action
+            android:id="@+id/action_ordersFragment_to_shoppingFragment"
+            app:destination="@id/shoppingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/serviceFragment"
         android:name="com.example.launderagent.ui.home.agent.ServiceFragment"
@@ -50,6 +57,9 @@
         android:id="@+id/customersServiceFragment"
         android:name="com.example.launderagent.ui.home.customer.CustomersServiceFragment"
         android:label="CustomersServiceFragment" >
+        <argument
+            android:name="currentUser"
+            app:argType="com.example.launderagent.data.entities.User" />
         <action
             android:id="@+id/action_customersServiceFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
@@ -78,5 +88,16 @@
         <action
             android:id="@+id/action_shoppingFragment_to_ordersFragment"
             app:destination="@id/ordersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/usersFragment"
+        android:name="com.example.launderagent.ui.home.customer.UsersFragment"
+        android:label="UsersFragment" >
+        <action
+            android:id="@+id/action_usersFragment_to_customersServiceFragment"
+            app:destination="@id/customersServiceFragment" />
+        <action
+            android:id="@+id/action_usersFragment_to_shoppingFragment"
+            app:destination="@id/shoppingFragment" />
     </fragment>
 </navigation>

@@ -1,20 +1,13 @@
 package com.example.launderagent.ui.home.customer
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.LEFT
-import androidx.recyclerview.widget.ItemTouchHelper.RIGHT
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.example.agent.R
 import com.example.agent.databinding.FragmentCustomersServiceBinding
@@ -23,7 +16,6 @@ import com.example.launderagent.data.MainViewModel
 import com.example.launderagent.data.entities.Service
 import com.example.launderagent.other.Status
 import com.example.launderagent.other.snackbar
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -40,26 +32,9 @@ class CustomersServiceFragment : Fragment(R.layout.fragment_customers_service) {
     private val viewModel: MainViewModel by viewModels()
     protected open val uid:String
         get() = FirebaseAuth.getInstance().uid!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
+    private val args:CustomersServiceFragmentArgs by navArgs()
 
 
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.cart_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_cart -> {
-              findNavController().navigate(R.id.action_customersServiceFragment_to_shoppingFragment)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCustomersServiceBinding.bind(view)

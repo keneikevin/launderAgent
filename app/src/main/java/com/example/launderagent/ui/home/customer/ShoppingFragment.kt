@@ -1,7 +1,6 @@
 package com.example.launderagent.ui.home.customer
 
 import android.app.AlertDialog
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -18,7 +17,6 @@ import com.example.agent.databinding.FragmentCartBinding
 import com.example.launderagent.adapter.ShoppingAdapter
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ShoppingFragment :Fragment(R.layout.fragment_cart) {
@@ -67,7 +65,8 @@ class ShoppingFragment :Fragment(R.layout.fragment_cart) {
             alertDialog.setCancelable(false)
             alertDialog.show()
 
-        }}
+        }
+    }
 
 
     private val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(

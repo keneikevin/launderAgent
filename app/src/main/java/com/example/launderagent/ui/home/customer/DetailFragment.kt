@@ -13,7 +13,6 @@ import com.example.agent.databinding.FragmentDetailBinding
 import com.example.launderagent.other.Status
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class DetailFragment: Fragment(R.layout.fragment_detail) {
@@ -21,6 +20,10 @@ class DetailFragment: Fragment(R.layout.fragment_detail) {
     private lateinit var binding: FragmentDetailBinding
     lateinit var viewModel: ShoppingViewModel
     private val args:DetailFragmentArgs by navArgs()
+
+
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -88,7 +91,7 @@ class DetailFragment: Fragment(R.layout.fragment_detail) {
                     Status.SUCCESS -> {
                         Snackbar.make(
                             binding.root,
-                            result.message ?: "Added Shopping Item",
+                            result.message ?: "Added to Cart",
                             Snackbar.LENGTH_LONG
                         ).show()
                         findNavController().popBackStack()

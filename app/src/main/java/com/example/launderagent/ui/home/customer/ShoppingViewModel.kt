@@ -1,6 +1,5 @@
 package com.example.launderagent.ui.home.customer
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.launderagent.data.entities.Service
 import com.example.launderagent.data.entities.ShoppingItem
