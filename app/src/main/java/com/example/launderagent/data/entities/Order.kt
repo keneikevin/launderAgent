@@ -13,6 +13,5 @@ data class Order (
     val orderUid: String ="",
     val bookTime: String ="",
     val completeTime: String ="",
-    val status: String ="",
-    val services: List<Service> = listOf()
+    val status: String =""
 ):Parcelable

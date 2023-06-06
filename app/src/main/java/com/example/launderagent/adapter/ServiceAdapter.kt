@@ -21,6 +21,7 @@ class ServiceAdapter @Inject constructor(
         val ivPostImage: ImageView = binding.img
         val tvPostAuthor: TextView = binding.textName
         val tvPostText: TextView = binding.textPrice
+        val per: TextView = binding.per
         val cad = binding.cad
     }
 
@@ -60,6 +61,7 @@ class ServiceAdapter @Inject constructor(
             glide.load(post.img).into(ivPostImage)
             tvPostAuthor.text = post.title
             tvPostText.text = post.price
+            per.text = post.per
             cad.setOnClickListener {
                 Snackbar.make(this.itemView, "Swipe to delete", Snackbar.LENGTH_SHORT).show()
             }

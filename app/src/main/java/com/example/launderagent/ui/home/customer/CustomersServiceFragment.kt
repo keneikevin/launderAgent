@@ -43,15 +43,7 @@ class CustomersServiceFragment : Fragment(R.layout.fragment_customers_service) {
         viewModel.loadOrder(uid)
         setHasOptionsMenu(true)
 
-//        binding.fab.setOnClickListener {
-//          viewModel.bookServices(
-//              code = "String",
-//              status = "Pending",
-//              bookTime = "8882",
-//              completeTime ="8882",
-//              prise = binding.total.text.toString()
-//          )
-//        }
+
         serviveAdapter.notifyDataSetChanged()
 
     }

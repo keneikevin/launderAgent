@@ -33,11 +33,12 @@
     <string name="cart">Cart</string>
 
     <string-array name="locations">
-        <item>Java</item>
-        <item>Kotlin</item>
-        <item>Swift</item>
-        <item>Python</item>
-        <item>Scala</item>
-        <item>Perl</item>
-    </string-array>
+        <item>Dagoretti</item>
+        <item>Embakasi</item>
+        <item>Langata</item>
+        <item>Kamukunji</item>
+        <item>Ngong</item>
+        <item>Kasarani</item>
+        <item>Rongai</item>
+    </string-array>y>
 </resources>

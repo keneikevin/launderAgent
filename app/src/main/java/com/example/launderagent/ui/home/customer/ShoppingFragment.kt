@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.agent.R
 import com.example.agent.databinding.FragmentCartBinding
 import com.example.launderagent.adapter.ShoppingAdapter
+import com.example.launderagent.data.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,26 +24,19 @@ class ShoppingFragment :Fragment(R.layout.fragment_cart) {
 
     private lateinit var binding: FragmentCartBinding
     lateinit var viewModel: ShoppingViewModel
+    lateinit var vm: MainViewModel
     private lateinit var shoppingAdapter: ShoppingAdapter
     //lateinit var daraja: Daraja
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(ShoppingViewModel::class.java)
+        vm = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         binding = FragmentCartBinding.bind(view)
         subscribeToObservers()
         setupRecyclerView()
 
 
-//        daraja = Daraja.with(
-//            "w6fuOwgcGqGmAmGAz4EADQg2xIiUr19R",
-//            "ACrHqNkpywZOm9Ek",
-//            Env.SANDBOX, //for Test use Env.PRODUCTION when in production
-//            object : DarajaListener<AccessToken> {
-//                override fun onResult(accessToken: AccessToken) {
-//                }
-//                override fun onError(error: String) {
-//                }
-//            })
+
 
         binding.fab.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
@@ -53,7 +47,9 @@ class ShoppingFragment :Fragment(R.layout.fragment_cart) {
             //performing positive action
             builder.setPositiveButton("Yes"){dialogInterface, which ->
 
-                findNavController().navigate(R.id.action_shoppingFragment_to_ordersFragment)
+                    vm.bookServices()
+
+               // findNavController().navigate(R.id.action_shoppingFragment_to_ordersFragment)
             }
             builder.setNeutralButton("Cancel"){dialogInterface , which ->
                 /*NO-Op*/

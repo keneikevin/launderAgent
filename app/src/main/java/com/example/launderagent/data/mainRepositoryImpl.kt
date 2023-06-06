@@ -48,7 +48,7 @@ class mainRepositoryImpl @Inject constructor(
             Resource.Error(e.localizedMessage)
         }
     }
-    override suspend fun bookServices(code: String,status:String,bookTime: String,completeTime: String, prise:String, services:List<Service>) = withContext(Dispatchers.IO) {
+    override suspend fun bookServices(code: String,status:String,bookTime: String,completeTime: String, prise:String) = withContext(Dispatchers.IO) {
         safeCall {
            val uid = firebaseAuth.uid!!
             val oderId = UUID.randomUUID().toString()
@@ -60,8 +60,7 @@ class mainRepositoryImpl @Inject constructor(
                 orderUid = uid,
                 bookTime = bookTime,
                 completeTime = completeTime,
-                status = status,
-                services = services
+                status = status
             )
             orders.document(oderId).set(post).await()
             Resouce.success(Any())

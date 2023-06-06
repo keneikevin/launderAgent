@@ -177,22 +177,22 @@ class MainViewModel @Inject constructor(
             }
         }
     }
-    fun bookServices(code: String,status:String,bookTime: String,completeTime: String, prise:String){
-        _bookServiceStatus.postValue(((Resouce.loading(null))))
+    fun bookServices(){
         viewModelScope.launch(dispatcher) {
-            val res = repository.getServices()
-            val result = res.data?.let {
-                repository.bookServices(
-                    code,
-                    status,
-                    bookTime,
-                    completeTime,
-                    prise,
-                    services = it
+            _bookServiceStatus.postValue(((Resouce.loading(null))))
+            viewModelScope.launch(dispatcher) {
+                val result =     repository.bookServices(
+                    code = "String",
+                    status = "Pending",
+                    bookTime = "8882",
+                    completeTime ="8882",
+                    prise = "bindin"
                 )
+                _bookServiceStatus.postValue((result))
+                Log.d("geuuhxsbhs",result.toString())
             }
 
-            _bookServiceStatus.postValue((result))
+
         }
     }
 }
