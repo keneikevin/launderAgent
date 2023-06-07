@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graqph"
-    app:startDestination="@id/serviceFragment">
+    app:startDestination="@id/ordersFragment">
 
     <fragment
         android:id="@+id/profileFragment"
@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_ordersFragment_to_shoppingFragment"
             app:destination="@id/shoppingFragment" />
+        <action
+            android:id="@+id/action_ordersFragment_to_editOrderFragment"
+            app:destination="@id/editOrderFragment" />
     </fragment>
     <fragment
         android:id="@+id/serviceFragment"
@@ -99,5 +102,13 @@
         <action
             android:id="@+id/action_usersFragment_to_shoppingFragment"
             app:destination="@id/shoppingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editOrderFragment"
+        android:name="com.example.launderagent.ui.home.EditOrderFragment"
+        android:label="EditOrderFragment" >
+        <argument
+            android:name="currentOrder"
+            app:argType="com.example.launderagent.data.entities.Order" />
     </fragment>
 </navigation>

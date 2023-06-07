@@ -43,9 +43,16 @@ class ServiceFragment : Fragment(R.layout.fragment_service) {
         serviveAdapter.notifyDataSetChanged()
 
 
+        requireActivity().title = "My Services"
+        serviveAdapter.notifyDataSetChanged()
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        // Restore the previous title when the fragment is destroyed
+        requireActivity().title = "Launder Agent"
+    }
     private val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
         0, LEFT or RIGHT
     ) {

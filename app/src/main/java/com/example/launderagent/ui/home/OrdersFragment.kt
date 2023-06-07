@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.example.agent.R
 import com.example.agent.databinding.FragmentOrderBinding
@@ -14,6 +16,7 @@ import com.example.launderagent.other.Status
 import com.example.launderagent.other.snackbar
 import com.example.launderagent.adapterpackage.OrdersAdapter
 import com.example.launderagent.data.MainViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -44,7 +47,7 @@ class OrdersFragment : Fragment(R.layout.fragment_order) {
     override fun onPause() {
         super.onPause()
         // Restore the previous title when the fragment is destroyed
-        requireActivity().title = "Launder"
+        requireActivity().title = "Launder Agent"
     }
 
 
@@ -63,7 +66,16 @@ class OrdersFragment : Fragment(R.layout.fragment_order) {
 
 
     private fun subscribeToObservers(){
+        viewModel.deleteOrderStatus.observe(viewLifecycleOwner, Observer { result ->
+            result?.let {
+                when (result.status) {
+                    Status.SUCCESS ->{}
+                    Status.LOADING ->{}
+                    Status.ERROR ->{  snackbar(it.message.toString())}
 
+                }
+            }
+        })
         viewModel.orders.observe(viewLifecycleOwner, Observer { result ->
             result?.let {
                 when (result.status) {

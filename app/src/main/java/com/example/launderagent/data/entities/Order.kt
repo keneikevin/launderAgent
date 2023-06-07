@@ -10,7 +10,8 @@ data class Order (
     @PrimaryKey()
     val code: String ="",
     val price: String ="",
-    val orderUid: String ="",
+    val oderUid: String ="",
+    val orderId: String ="",
     val bookTime: String ="",
     val completeTime: String ="",
     val status: String =""

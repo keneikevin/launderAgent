@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.agent.R
 import com.example.launderagent.data.entities.Order
+import com.example.launderagent.data.entities.OrderUpdate
 import com.example.launderagent.other.Resouce
 import com.example.launderagent.other.Resource
 import com.example.launderagent.data.entities.ProfileUpdate
@@ -42,6 +43,9 @@ class MainViewModel @Inject constructor(
     private val _updateProfileStatus = MutableLiveData<Resouce<Any>>()
     val updateProfileStatus: LiveData<Resouce<Any>> = _updateProfileStatus
 
+ private val _updateOrderStatus = MutableLiveData<Resouce<Any>>()
+    val updateOrderStatus: LiveData<Resouce<Any>> = _updateOrderStatus
+
     private val _profileMeta = MutableLiveData<Resouce<User>>()
     val profileMeta: LiveData<Resouce<User>> = _profileMeta
 
@@ -63,6 +67,9 @@ class MainViewModel @Inject constructor(
 
     private val _deleteServiceStatus = MutableLiveData<Resouce<Service>>()
     val deleteServiceStatus: LiveData<Resouce<Service>> = _deleteServiceStatus
+
+    private val _deleteOrderStatus = MutableLiveData<Resouce<Order>>()
+    val deleteOrderStatus: LiveData<Resouce<Order>> = _deleteOrderStatus
 
     private val _services = MutableLiveData<Resouce<List<Service>>>()
     val services: LiveData<Resouce<List<Service>>> = _services
@@ -104,6 +111,14 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch(dispatcher) {
             val result = repository.deleteService(post)
             _deleteServiceStatus.postValue((result))
+        }
+    }
+    fun deleteOrder(post: Order) {
+        _deleteOrderStatus.postValue((Resouce.loading(null)))
+
+        viewModelScope.launch(dispatcher) {
+            val result = repository.deleteOrder(post)
+            _deleteOrderStatus.postValue((result))
         }
     }
 
@@ -162,6 +177,15 @@ class MainViewModel @Inject constructor(
 
             }
         }
+    }
+    fun updateOrder(profileUpdate: OrderUpdate){
+        _updateOrderStatus.postValue((Resouce.loading(null)))
+            viewModelScope.launch(dispatcher){
+                val result = repository.updateOrder(profileUpdate)
+                _updateOrderStatus.postValue((result))
+
+            }
+
     }
 
     fun setCurImageUri(uri: Uri) {

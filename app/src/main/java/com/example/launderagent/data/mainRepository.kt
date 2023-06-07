@@ -4,6 +4,7 @@ import com.google.firebase.auth.FirebaseUser
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import com.example.launderagent.data.entities.Order
+import com.example.launderagent.data.entities.OrderUpdate
 import com.example.launderagent.data.entities.Service
 import com.example.launderagent.data.entities.ProfileUpdate
 import com.example.launderagent.data.entities.ShoppingItem
@@ -19,8 +20,10 @@ interface mainRepository {
     suspend fun login(email: String, password: String): Resource<FirebaseUser>
 
     suspend fun updateProfile(profileUpdate: ProfileUpdate): Resouce<Any>
+    suspend fun updateOrder(profileUpdate: OrderUpdate): Resouce<Any>
 
     suspend fun deleteService(post: Service): Resouce<Service>
+    suspend fun deleteOrder(post: Order): Resouce<Order>
 
   //  suspend fun createPost(imageUri: Uri, name: String, prise:String,per:String): Resouce<Any>
 
