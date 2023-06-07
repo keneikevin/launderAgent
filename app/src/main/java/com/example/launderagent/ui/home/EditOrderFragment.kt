@@ -43,12 +43,6 @@ class EditOrderFragment : Fragment(R.layout.fragment_editorder) {
     private var cuImageUri: Uri? = null
      lateinit var localions: String
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            binding.ivPostImage.setImageURI(data?.data)
-            data?.data?.let { viewModel.setCurImageUri(it) }
-        }}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,18 +72,7 @@ class EditOrderFragment : Fragment(R.layout.fragment_editorder) {
         }
 
         binding.btnSetPostImage.setOnClickListener {
-            //check runtime permission
-            if (checkSelfPermission(this.requireContext(),Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                PermissionChecker.PERMISSION_DENIED){
-                //permission denied
-                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-                //show popup to request runtime permission
-                requestPermissions(permissions, PERMISSION_CODE);
-            }
-            else{
-                //permission already granted
-                pickImageFromGallery()
-            }
+
         }
     }
     private fun subscribeToObservers() {
@@ -145,41 +128,6 @@ class EditOrderFragment : Fragment(R.layout.fragment_editorder) {
         })
     }
 
-
-    private fun pickImageFromGallery() {
-        //Intent to pick image
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, IMAGE_PICK_CODE)
-    }
-
-
-    companion object {
-        //image pick code
-        private val IMAGE_PICK_CODE = 1000
-        //Permission code
-        private val PERMISSION_CODE = 1001
-    }
-
-    //handle requested permission result
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode){
-            PERMISSION_CODE -> {
-                if (grantResults.size >0 && grantResults[0] ==
-                    PackageManager.PERMISSION_GRANTED){
-                    //permission from popup granted
-                    pickImageFromGallery()
-                }
-                else{
-                    //permission from popup denied
-                    Toast.makeText(this.requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
-    //handle result of picked image
 
 }
 
