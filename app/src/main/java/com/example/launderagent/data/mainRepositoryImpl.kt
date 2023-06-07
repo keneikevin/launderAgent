@@ -131,7 +131,7 @@ class mainRepositoryImpl @Inject constructor(
     }
    override suspend fun deleteOrder(post: Order) = withContext(Dispatchers.IO) {
         safeCall {
-            orders.document(post.code).delete().await()
+            orders.document(post.orderId).delete().await()
            // storage.getReferenceFromUrl(post.img).delete().await()
             Resouce.success(post)
         }

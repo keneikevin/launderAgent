@@ -2,6 +2,7 @@ package com.example.launderagent.ui.home
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -72,11 +73,44 @@ class EditOrderFragment : Fragment(R.layout.fragment_editorder) {
         }
 
         binding.btnSetPostImage.setOnClickListener {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Laundery")
+            val sizePice = "Proceed to delete oder: ${args.currentOrder.code} "
+            builder.setMessage(sizePice)
+            builder.setIcon(R.drawable.a)
+            //performing positive action
+            builder.setPositiveButton("Yes"){dialogInterface, which ->
+
+
+                viewModel.deleteOrder(args.currentOrder)
+
+                // findNavController().navigate(R.id.action_shoppingFragment_to_ordersFragment)
+            }
+            builder.setNeutralButton("Cancel"){dialogInterface , which ->
+                /*NO-Op*/
+            }
+
+            // Create the AlertDialog
+            val alertDialog: AlertDialog = builder.create()
+            // Set other dialog properties
+            alertDialog.setCancelable(false)
+            alertDialog.show()
 
         }
     }
     private fun subscribeToObservers() {
+        viewModel.deleteOrderStatus.observe(viewLifecycleOwner, Observer { result ->
+            result?.let {
+                when (result.status) {
+                    Status.SUCCESS ->{
+                        findNavController().popBackStack()
+                    }
+                    Status.LOADING ->{}
+                    Status.ERROR ->{  snackbar(it.message.toString())}
 
+                }
+            }
+        })
         viewModel.updateOrderStatus.observe(viewLifecycleOwner, Observer { result ->
             result?.let {
                 when (result.status) {
