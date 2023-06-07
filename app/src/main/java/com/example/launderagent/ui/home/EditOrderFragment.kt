@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +27,8 @@ import com.example.launderagent.data.entities.OrderUpdate
 import com.example.launderagent.other.snackbar
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Date
+import java.util.Locale
 //import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -66,16 +69,18 @@ class EditOrderFragment : Fragment(R.layout.fragment_editorder) {
 //            val username = binding.etCakeName.text.toString()
 //            val email = binding.etPriceName.text.toString()
 //            val phone = binding.etPriceN.text.toString()
-
-            val profileUpdate = OrderUpdate(status = "Status", orderId = args.currentOrder.orderId)
+            val currentDate = Date()
+            val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+            val readableDate = dateFormat.format(currentDate)
+            val profileUpdate = OrderUpdate(status = "Status", orderId = args.currentOrder.orderId, completeTime = readableDate)
 
                 viewModel.updateOrder(profileUpdate)
         }
 
         binding.btnSetPostImage.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
-            builder.setTitle("Laundery")
-            val sizePice = "Proceed to delete oder: ${args.currentOrder.code} "
+            builder.setTitle("Launder")
+            val sizePice = "Proceed to delete oder: ${args.currentOrder.code} ?"
             builder.setMessage(sizePice)
             builder.setIcon(R.drawable.a)
             //performing positive action
