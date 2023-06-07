@@ -24,7 +24,8 @@ interface mainRepository {
 
   //  suspend fun createPost(imageUri: Uri, name: String, prise:String,per:String): Resouce<Any>
 
-
+    suspend fun getOrders(): Resouce<List<Order>>
+    suspend fun getOrder(): Resouce<List<Order>>
 
     suspend fun getServices(): Resouce<List<Service>>
     suspend fun getUsers(): Resouce<List<User>>

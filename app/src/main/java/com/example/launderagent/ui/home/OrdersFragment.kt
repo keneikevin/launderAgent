@@ -1,78 +1,88 @@
-package com.example.launderagent.ui.home
-
+package com.example.launderagent.ui.auth
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavHostController
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.RequestManager
 import com.example.agent.R
 import com.example.agent.databinding.FragmentOrderBinding
+import com.example.launderagent.other.Status
+import com.example.launderagent.other.snackbar
+import com.example.launderagent.adapterpackage.OrdersAdapter
 import com.example.launderagent.data.MainViewModel
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
-class OrdersFragment :Fragment(R.layout.fragment_order){
+class OrdersFragment : Fragment(R.layout.fragment_order) {
 
-    private lateinit var binding: FragmentOrderBinding
-    lateinit var viewModel: MainViewModel
-    private lateinit var navController: NavHostController
     @Inject
-    lateinit var glide: RequestManager
-    protected open val uid:String
-        get() = FirebaseAuth.getInstance().uid!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
+    lateinit var glide:RequestManager
+    @Inject
+    lateinit var serviveAdapter: OrdersAdapter
+    private lateinit var binding: FragmentOrderBinding
+    private val viewModel: MainViewModel by viewModels()
 
 
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.cart_menu, menu)
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_cart -> {
-                findNavController().navigate(R.id.action_ordersFragment_to_shoppingFragment)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
-
-        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         binding = FragmentOrderBinding.bind(view)
-        // Get the NavHostController from the Composable function
-        // Create the NavHostController
-        navController = NavHostController(this.requireActivity())
-        viewModel.loadOrder(uid)
-
+        subscribeToObservers()
+        setUpRecylerView()
+        requireActivity().title = "My Orders"
+        serviveAdapter.notifyDataSetChanged()
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        // Restore the previous title when the fragment is destroyed
+        requireActivity().title = "Launder"
+    }
 
 
+    private fun setUpRecylerView() = binding.rvCakes.apply{
+        viewModel.getOrders()
+        serviveAdapter= OrdersAdapter(glide)
+        binding.rvCakes.adapter = serviveAdapter
+        binding.rvCakes.layoutManager = LinearLayoutManager(requireContext())
+
+        adapter=serviveAdapter
+        layoutManager = LinearLayoutManager(requireContext())
+        itemAnimator = null
+
+        serviveAdapter.notifyDataSetChanged()
+    }
+
+
+    private fun subscribeToObservers(){
+
+        viewModel.orders.observe(viewLifecycleOwner, Observer { result ->
+            result?.let {
+                when (result.status) {
+                    Status.SUCCESS ->{
+                        serviveAdapter.posts = it.data!!
+                        binding.progressBar.visibility =  View.GONE
+                    }
+                    Status.ERROR ->{
+                        binding.progressBar.visibility = View.GONE
+                        snackbar(it.message.toString())
+                    }
+                    Status.LOADING ->{binding.progressBar.visibility = View.VISIBLE}
+                }
+            }
+
+        })
+
+    }
 }
-
-
-
-
-
-
 
 
 

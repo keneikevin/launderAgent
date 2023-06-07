@@ -33,7 +33,7 @@ class mainRepositoryImpl @Inject constructor(
     private val firestore = FirebaseFirestore.getInstance()
     private val storage = Firebase.storage
     private val cakes = firestore.collection(SERVICE_COLLECTION)
-    private val orders = firestore.collection("oders")
+    private val orders = firestore.collection("orders")
     private val users = firestore.collection("users")
 
     override val currentUser: FirebaseUser?
@@ -64,6 +64,30 @@ class mainRepositoryImpl @Inject constructor(
             )
             orders.document(oderId).set(post).await()
             Resouce.success(Any())
+        }
+    }
+    override suspend fun getOrders()= withContext(Dispatchers.IO) {
+        safeCall {
+            val uid = FirebaseAuth.getInstance().currentUser?.uid
+            val allPosts = orders
+                .get()
+                .await()
+                .toObjects(Order::class.java)
+            Log.d("yaass", allPosts.toString())
+            Resouce.success(allPosts)
+        }
+    }
+    override suspend fun getOrder() = withContext(Dispatchers.IO) {
+        safeCall {
+
+            val allPosts = orders.whereEqualTo("orderUid", firebaseAuth.uid!!)
+                .get()
+                .await()
+
+                .toObjects(Order::class.java)
+
+
+            Resouce.success(allPosts)
         }
     }
 

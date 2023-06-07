@@ -53,6 +53,8 @@ class MainViewModel @Inject constructor(
    private val _bookServiceStatus = MutableLiveData<Resouce<Any>>()
     val bookServiceStatus: LiveData<Resouce<Any>> = _bookServiceStatus
 
+    private val _orders = MutableLiveData<Resouce<List<Order>>>()
+    val orders: LiveData<Resouce<List<Order>>> = _orders
 
 
     private val _curImageUri = MutableLiveData<Uri>()
@@ -175,6 +177,15 @@ class MainViewModel @Inject constructor(
                 val result = repository.createService(imageUri,name,price,per)
                 _createServiceStatus.postValue((result))
             }
+        }
+    }
+    fun getOrders() {
+        _orders.postValue((Resouce.loading(null)))
+
+        viewModelScope.launch(dispatcher){
+            val result = repository.getOrders()
+            Log.d("tttttuu", result.toString())
+            _orders.postValue((result))
         }
     }
     fun bookServices(){

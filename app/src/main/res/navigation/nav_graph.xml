@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/ordersFragment"
-        android:name="com.example.launderagent.ui.home.OrdersFragment"
+        android:name="com.example.launderagent.ui.auth.OrdersFragment"
         android:label="OrdersFragment" >
         <action
             android:id="@+id/action_ordersFragment_to_shoppingFragment"
