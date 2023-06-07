@@ -66,9 +66,6 @@ class EditOrderFragment : Fragment(R.layout.fragment_editorder) {
 
 
         binding.btnPost.setOnClickListener {
-//            val username = binding.etCakeName.text.toString()
-//            val email = binding.etPriceName.text.toString()
-//            val phone = binding.etPriceN.text.toString()
             val currentDate = Date()
             val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
             val readableDate = dateFormat.format(currentDate)
