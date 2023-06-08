@@ -247,7 +247,8 @@ class mainRepositoryImpl @Inject constructor(
             val uid = FirebaseAuth.getInstance().currentUser?.uid
 
 
-            val allPosts = cakes.whereEqualTo("authorUid", uid)
+            val allPosts = cakes
+                //.whereEqualTo("authorUid", uid)
               //  .orderBy("date", Query.Direction.DESCENDING)
                 .get()
                 .await()
