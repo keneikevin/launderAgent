@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
@@ -21,6 +22,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.RequestManager
 import com.example.agent.R
 import com.example.agent.databinding.FragmentEditorderBinding
+import com.example.agent.databinding.FragmentOrdereditBinding
 import com.example.launderagent.other.Status
 import com.example.launderagent.data.MainViewModel
 import com.example.launderagent.data.entities.OrderUpdate
@@ -33,8 +35,8 @@ import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class EditOrderFragment : Fragment(R.layout.fragment_editorder) {
-    private lateinit var binding: FragmentEditorderBinding
+class EditOrderFragment : Fragment(R.layout.fragment_orderedit) {
+    private lateinit var binding: FragmentOrdereditBinding
     private val viewModel: MainViewModel by viewModels()
     @Inject
     lateinit var glide: RequestManager
@@ -45,36 +47,64 @@ class EditOrderFragment : Fragment(R.layout.fragment_editorder) {
 
 
     private var cuImageUri: Uri? = null
-     lateinit var localions: String
+     lateinit var stats: String
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentEditorderBinding.bind(view)
+        binding = FragmentOrdereditBinding.bind(view)
         if (args.currentOrder.oderUid.isNotEmpty()){
          //   viewModel.getOrders(args.currentOrder.orderUid)
             viewModel.getUser(args.currentOrder.oderUid)
-            binding.loc
+         //   binding.loc
             subscribeToObservers()
         }
 
         auth = FirebaseAuth.getInstance()
         val uid = auth.uid!!
         viewModel.getUser(uid)
-        binding.btnPost.text = args.currentOrder.status
-        binding.loc.text = args.currentOrder.oderUid
+       // binding.btnPost.text = args.currentOrder.status
+      //  binding.etShoppingItemName.text = args.currentOrder.code
+        binding.orderid.text = args.currentOrder.code
+        binding.book.text = args.currentOrder.bookTime
+        binding.complete.text = args.currentOrder.completeTime
+        binding.pricee.text = args.currentOrder.price
+        binding.status.text = args.currentOrder.status
+        stats = args.currentOrder.status
+        when (args.currentOrder.status) {
+            "Pending" -> {
+                binding.status.setBackgroundColor(Color.parseColor("#0000FF"))
+                stats = "Accepted"
+            }
 
+            "Accepted" -> {
+                binding.status.setBackgroundColor(Color.parseColor("#800000"))
+                stats = "Processing"
+            }
+            "Processing" -> {
+                binding.status.setBackgroundColor(Color.parseColor("#808080"))
+                stats = "Complete"
+            }
+            "Complete" -> {
+                binding.status.setBackgroundColor(Color.parseColor("#006400"))
+                binding.dele.visibility = View.VISIBLE
+                stats = "Complete"}
+            else ->  {
+                binding.status.setBackgroundColor(Color.RED)
+            }
+        }
 
-        binding.btnPost.setOnClickListener {
+        binding.button.setOnClickListener {
+            stats
             val currentDate = Date()
             val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
             val readableDate = dateFormat.format(currentDate)
-            val profileUpdate = OrderUpdate(status = "Status", orderId = args.currentOrder.orderId, completeTime = readableDate)
+            val profileUpdate = OrderUpdate(status = stats, orderId = args.currentOrder.orderId, completeTime = readableDate)
 
                 viewModel.updateOrder(profileUpdate)
         }
 
-        binding.btnSetPostImage.setOnClickListener {
+        binding.dele.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
             builder.setTitle("Launder")
             val sizePice = "Proceed to delete oder: ${args.currentOrder.code} ?"
@@ -99,6 +129,25 @@ class EditOrderFragment : Fragment(R.layout.fragment_editorder) {
             alertDialog.show()
 
         }
+        when (args.currentOrder.status) {
+            "Pending" -> {
+
+                binding.button.text = "Accept Order"
+
+            }
+
+            "Accepted" -> {
+                binding.button.text = "Process Order"
+            }
+            "Processing" -> {
+                binding.button.text = "Complete Order"
+            }
+            "Complete" -> {
+                binding.button.text = "Order Complete"
+                binding.button.setBackgroundColor(Color.parseColor("#006400"))}
+            else ->  {
+                binding.button.text = "Complete Order"}
+            }
     }
     private fun subscribeToObservers() {
         viewModel.deleteOrderStatus.observe(viewLifecycleOwner, Observer { result ->
@@ -118,19 +167,19 @@ class EditOrderFragment : Fragment(R.layout.fragment_editorder) {
                 when (result.status) {
                     Status.SUCCESS ->{
 
-                        binding.createPostProgressBar.visibility =  View.GONE
-                        binding.btnPost.isClickable = true
+                        binding.progressBar.visibility =  View.GONE
+                        binding.button.isClickable = true
                         snackbar("Order updated Successfully")
                         findNavController().popBackStack()
 
                     }
                     Status.ERROR ->{
-                                    binding.createPostProgressBar.visibility = View.GONE
-                        binding.btnPost.isClickable = true
+                                    binding.progressBar.visibility = View.GONE
+                        binding.button.isClickable = true
             snackbar(it.message.toString())
                     }
-                    Status.LOADING ->{binding.createPostProgressBar.visibility = View.VISIBLE
-                        binding.btnPost.isClickable = false
+                    Status.LOADING ->{binding.progressBar.visibility = View.VISIBLE
+                        binding.button.isClickable = false
                     }
                 }
             }
@@ -147,17 +196,23 @@ class EditOrderFragment : Fragment(R.layout.fragment_editorder) {
                 when (result.status) {
                     Status.SUCCESS ->{
 
-                        binding.createPostProgressBar.visibility = View.GONE
-                        glide.load(it.data?.profilePictureUrl).into(binding.ivPostImage)
+                        binding.progressBar.visibility = View.GONE
+                        glide.load(it.data?.profilePictureUrl).into(binding.bigMage)
+                        binding.etShoppingItemName.text = it.data?.username
+                        binding.eEmail.text = it.data?.email
+                        binding.ePhone.text = it.data?.phone
+                        binding.eTime.text = it.data?.time
+
+
 //                        binding.etCakeName.setText(it.data?.username)
 //                        binding.etPriceN.setText(it.data?.phone)
 //                        binding.etPriceName.setText(it.data?.email)
                     }
                     Status.ERROR ->{
-                        binding.createPostProgressBar.visibility = View.GONE
+                        binding.progressBar.visibility = View.GONE
                         snackbar(it.message.toString())
                     }
-                    Status.LOADING ->{ binding.createPostProgressBar.visibility = View.VISIBLE}
+                    Status.LOADING ->{ binding.progressBar.visibility = View.VISIBLE}
                 }
             }
 
