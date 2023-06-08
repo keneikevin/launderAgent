@@ -1,5 +1,6 @@
 package com.example.launderagent.adapterpackage
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
@@ -63,7 +64,23 @@ class OrdersAdapter @Inject constructor(
             tvPostAuthor.text = post.code
 
             var tt = "${post.bookTime}   |   3 items   |   ${post.price}"
+            when (post.status) {
+                "Pending" -> {
+                    binding.img.setBackgroundColor(Color.parseColor("#0000FF"))
+                }
 
+                "Accepted" -> {
+                binding.img.setBackgroundColor(Color.parseColor("#800000"))
+            }
+                "Processing" -> {
+                binding.img.setBackgroundColor(Color.parseColor("#808080"))
+            }
+                "Complete" -> {
+                    binding.img.setBackgroundColor(Color.parseColor("#006400"))}
+                else ->  {
+                    binding.img.setBackgroundColor(Color.RED)
+            }
+            }
             tvPostText.text = tt
            binding.img.text = post.status
             cad.setOnClickListener {
