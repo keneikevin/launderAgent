@@ -75,26 +75,41 @@ class EditOrderFragment : Fragment(R.layout.fragment_orderedit) {
             "Pending" -> {
                 binding.status.setBackgroundColor(Color.parseColor("#0000FF"))
                 stats = "Accepted"
+                binding.button.text = "Accept Order"
+
             }
 
             "Accepted" -> {
                 binding.status.setBackgroundColor(Color.parseColor("#800000"))
                 stats = "Processing"
+                binding.button.text = "Process Order"
             }
             "Processing" -> {
                 binding.status.setBackgroundColor(Color.parseColor("#808080"))
                 stats = "Complete"
+                binding.button.text = "Complete Order"
             }
             "Complete" -> {
                 binding.status.setBackgroundColor(Color.parseColor("#006400"))
+                binding.button.setBackgroundColor(Color.parseColor("#006400"))
                 binding.dele.visibility = View.VISIBLE
+                binding.button.text = "Order Complete"
+                binding.button.isClickable = false
                 stats = "Complete"}
+            "Canceled" -> {
+                binding.dele.visibility = View.VISIBLE
+                stats = "Canceled"
+                binding.button.text = "Order Canceled"
+                binding.button.setBackgroundColor(Color.RED)
+                binding.button.isClickable = false
+            }
             else ->  {
                 binding.status.setBackgroundColor(Color.RED)
             }
         }
+        if (args.currentOrder.status.equals("Processing") ||args.currentOrder.status.equals("Pending") || args.currentOrder.status.equals("Accepted")) {
 
-        binding.button.setOnClickListener {
+            binding.button.setOnClickListener {
             stats
             val currentDate = Date()
             val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
@@ -102,7 +117,7 @@ class EditOrderFragment : Fragment(R.layout.fragment_orderedit) {
             val profileUpdate = OrderUpdate(status = stats, orderId = args.currentOrder.orderId, completeTime = readableDate)
 
                 viewModel.updateOrder(profileUpdate)
-        }
+        }}
 
         binding.dele.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
@@ -129,25 +144,7 @@ class EditOrderFragment : Fragment(R.layout.fragment_orderedit) {
             alertDialog.show()
 
         }
-        when (args.currentOrder.status) {
-            "Pending" -> {
 
-                binding.button.text = "Accept Order"
-
-            }
-
-            "Accepted" -> {
-                binding.button.text = "Process Order"
-            }
-            "Processing" -> {
-                binding.button.text = "Complete Order"
-            }
-            "Complete" -> {
-                binding.button.text = "Order Complete"
-                binding.button.setBackgroundColor(Color.parseColor("#006400"))}
-            else ->  {
-                binding.button.text = "Complete Order"}
-            }
     }
     private fun subscribeToObservers() {
         viewModel.deleteOrderStatus.observe(viewLifecycleOwner, Observer { result ->
