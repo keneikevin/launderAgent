@@ -188,6 +188,34 @@ class EditOrderFragment : Fragment(R.layout.fragment_orderedit) {
               Log.d("raetat",it.toString())
           }
         }
+        // Inside the onViewCreated() function after initializing your views and variables
+
+        // Inside the onViewCreated() function after initializing your views and variables
+
+        binding.ll.setOnClickListener {
+            // Latitude and Longitude for Point A
+            val latA = -1.3874  // Ongata Rongai latitude
+            val lonA = 36.9673  // Ongata Rongai longitude
+
+            // Latitude and Longitude for Point B
+            val latB = -1.2921
+            val lonB = 36.8219
+
+            // Create a URI for Google Maps with polyline information
+            val gmmIntentUri = Uri.parse("http://maps.google.com/maps?saddr=$latA,$lonA&daddr=$latB,$lonB&dirflg=d")
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+
+            // Verify that the intent will resolve to an activity
+            if (mapIntent.resolveActivity(requireActivity().packageManager) != null) {
+                startActivity(mapIntent)
+            } else {
+                // If Google Maps app is not installed, handle the situation as needed
+                Toast.makeText(requireContext(), "Google Maps app is not installed", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
         viewModel.getUserStatus.observe(viewLifecycleOwner, Observer {result->
             result?.let {
                 when (result.status) {
