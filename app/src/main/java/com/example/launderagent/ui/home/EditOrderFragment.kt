@@ -1,10 +1,7 @@
 package com.example.launderagent.ui.home
 
-import android.Manifest
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
@@ -12,8 +9,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.PermissionChecker
-import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -21,7 +16,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.RequestManager
 import com.example.agent.R
-import com.example.agent.databinding.FragmentEditorderBinding
 import com.example.agent.databinding.FragmentOrdereditBinding
 import com.example.launderagent.other.Status
 import com.example.launderagent.data.MainViewModel
@@ -53,9 +47,9 @@ class EditOrderFragment : Fragment(R.layout.fragment_orderedit) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentOrdereditBinding.bind(view)
-        if (args.currentOrder.oderUid.isNotEmpty()){
+        if (args.currentOrder.customerOrderid.isNotEmpty()){
          //   viewModel.getOrders(args.currentOrder.orderUid)
-            viewModel.getUser(args.currentOrder.oderUid)
+            viewModel.getUser(args.currentOrder.customerOrderid)
          //   binding.loc
             subscribeToObservers()
         }
@@ -117,6 +111,7 @@ class EditOrderFragment : Fragment(R.layout.fragment_orderedit) {
             val profileUpdate = OrderUpdate(status = stats, orderId = args.currentOrder.orderId, completeTime = readableDate)
 
                 viewModel.updateOrder(profileUpdate)
+                findNavController().popBackStack();
         }}
 
         binding.dele.setOnClickListener {
@@ -130,7 +125,7 @@ class EditOrderFragment : Fragment(R.layout.fragment_orderedit) {
 
 
                 viewModel.deleteOrder(args.currentOrder)
-
+                findNavController().popBackStack();
                 // findNavController().navigate(R.id.action_shoppingFragment_to_ordersFragment)
             }
             builder.setNeutralButton("Cancel"){dialogInterface , which ->

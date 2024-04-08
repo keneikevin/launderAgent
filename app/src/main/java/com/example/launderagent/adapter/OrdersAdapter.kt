@@ -33,7 +33,7 @@ class OrdersAdapter @Inject constructor(
         }
 
         override fun areItemsTheSame(oldItem: Order, newItem: Order): Boolean {
-            return oldItem.oderUid == newItem.oderUid
+            return oldItem.customerOrderid == newItem.customerOrderid
         }
     }
 

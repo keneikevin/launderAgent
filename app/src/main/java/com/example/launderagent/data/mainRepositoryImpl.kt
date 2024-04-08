@@ -1,6 +1,5 @@
 package com.example.launderagent.data
 
-import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -52,14 +51,14 @@ class mainRepositoryImpl @Inject constructor(
     }
     override suspend fun bookServices(code: String,status:String,bookTime: String,completeTime: String, prise:String) = withContext(Dispatchers.IO) {
         safeCall {
-           val uid = firebaseAuth.uid!!
+            val uid = firebaseAuth.uid!!
             val oderId = UUID.randomUUID().toString()
 //            val imageUploadResult = storage.getReference(postId).putFile(imageUri).await()
 //            val imageUrl = imageUploadResult?.metadata?.reference?.downloadUrl?.await().toString()
             val post = Order(
                 code = code,
                 price = prise,
-                oderUid = uid,
+                customerOrderid = uid,
                 bookTime = bookTime,
                 completeTime = completeTime,
                 status = status
@@ -70,25 +69,13 @@ class mainRepositoryImpl @Inject constructor(
     }
     override suspend fun getOrders()= withContext(Dispatchers.IO) {
         safeCall {
-            val uid = FirebaseAuth.getInstance().currentUser?.uid
+          val uid = FirebaseAuth.getInstance().currentUser?.uid
             val allPosts = orders
+         //       .whereEqualTo("orderId", "42cc14e9-1e8b-4174-8d16-7b64cee67075")
                 .get()
                 .await()
                 .toObjects(Order::class.java)
             Log.d("yaass", allPosts.toString())
-            Resouce.success(allPosts)
-        }
-    }
-    override suspend fun getOrder() = withContext(Dispatchers.IO) {
-        safeCall {
-
-            val allPosts = orders.whereEqualTo("orderUid", firebaseAuth.uid!!)
-                .get()
-                .await()
-
-                .toObjects(Order::class.java)
-
-
             Resouce.success(allPosts)
         }
     }
@@ -115,14 +102,14 @@ class mainRepositoryImpl @Inject constructor(
 
     override suspend fun updateProfilePicture(uid: String, imageUri: Uri) = withContext(Dispatchers.IO) {
 
-            val storageRef = storage.getReference(uid)
-            val user = getUser(uid).data!!
-            if (user.profilePictureUrl != DEFAULT_PROFILE_PICTURE) {
-                storage.getReferenceFromUrl(user.profilePictureUrl).delete().await()
-            }
-
-            storageRef.putFile(imageUri).await().metadata?.reference?.downloadUrl?.await()
+        val storageRef = storage.getReference(uid)
+        val user = getUser(uid).data!!
+        if (user.profilePictureUrl != DEFAULT_PROFILE_PICTURE) {
+            storage.getReferenceFromUrl(user.profilePictureUrl).delete().await()
         }
+
+        storageRef.putFile(imageUri).await().metadata?.reference?.downloadUrl?.await()
+    }
     override suspend fun deleteService(post: Service) = withContext(Dispatchers.IO) {
         safeCall {
             cakes.document(post.mediaId).delete().await()
@@ -130,10 +117,10 @@ class mainRepositoryImpl @Inject constructor(
             Resouce.success(post)
         }
     }
-   override suspend fun deleteOrder(post: Order) = withContext(Dispatchers.IO) {
+    override suspend fun deleteOrder(post: Order) = withContext(Dispatchers.IO) {
         safeCall {
             orders.document(post.orderId).delete().await()
-           // storage.getReferenceFromUrl(post.img).delete().await()
+            // storage.getReferenceFromUrl(post.img).delete().await()
             Resouce.success(post)
         }
     }
@@ -248,8 +235,8 @@ class mainRepositoryImpl @Inject constructor(
 
 
             val allPosts = cakes
-                //.whereEqualTo("authorUid", uid)
-              //  .orderBy("date", Query.Direction.DESCENDING)
+                .whereEqualTo("authorUid", uid)
+                //  .orderBy("date", Query.Direction.DESCENDING)
                 .get()
                 .await()
 
@@ -263,10 +250,8 @@ class mainRepositoryImpl @Inject constructor(
     override suspend fun getUsers()= withContext(Dispatchers.IO) {
         safeCall {
             val uid = FirebaseAuth.getInstance().currentUser?.uid
-
-
             val allPosts = users
-                //  .orderBy("date", Query.Direction.DESCENDING)
+                .whereNotEqualTo("uid", uid) // Filter to exclude matching uid
                 .get()
                 .await()
 

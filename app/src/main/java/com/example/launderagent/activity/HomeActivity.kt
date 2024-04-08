@@ -26,6 +26,7 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment)
                 as NavHostFragment
 

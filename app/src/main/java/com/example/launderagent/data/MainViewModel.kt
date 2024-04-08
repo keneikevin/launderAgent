@@ -43,7 +43,7 @@ class MainViewModel @Inject constructor(
     private val _updateProfileStatus = MutableLiveData<Resouce<Any>>()
     val updateProfileStatus: LiveData<Resouce<Any>> = _updateProfileStatus
 
- private val _updateOrderStatus = MutableLiveData<Resouce<Any>>()
+    private val _updateOrderStatus = MutableLiveData<Resouce<Any>>()
     val updateOrderStatus: LiveData<Resouce<Any>> = _updateOrderStatus
 
     private val _profileMeta = MutableLiveData<Resouce<User>>()
@@ -54,7 +54,7 @@ class MainViewModel @Inject constructor(
 
     private val _createServiceStatus = MutableLiveData<Resouce<Any>>()
     val createServiceStatus: LiveData<Resouce<Any>> = _createServiceStatus
-   private val _bookServiceStatus = MutableLiveData<Resouce<Any>>()
+    private val _bookServiceStatus = MutableLiveData<Resouce<Any>>()
     val bookServiceStatus: LiveData<Resouce<Any>> = _bookServiceStatus
 
     private val _orders = MutableLiveData<Resouce<List<Order>>>()
@@ -165,7 +165,7 @@ class MainViewModel @Inject constructor(
         //getPosts(uid)
     }
     fun updateProfile(profileUpdate: ProfileUpdate){
-       if (profileUpdate.username.length < MIN_USER_NAME){
+        if (profileUpdate.username.length < MIN_USER_NAME){
             val error = applicationContext.getString(R.string.error_username_too_short)
             _updateProfileStatus.postValue(((Resouce.error(error,null))))
         } else{
@@ -180,11 +180,11 @@ class MainViewModel @Inject constructor(
     }
     fun updateOrder(profileUpdate: OrderUpdate){
         _updateOrderStatus.postValue((Resouce.loading(null)))
-            viewModelScope.launch(dispatcher){
-                val result = repository.updateOrder(profileUpdate)
-                _updateOrderStatus.postValue((result))
+        viewModelScope.launch(dispatcher){
+            val result = repository.updateOrder(profileUpdate)
+            _updateOrderStatus.postValue((result))
 
-            }
+        }
 
     }
 
