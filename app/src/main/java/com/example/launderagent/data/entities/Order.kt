@@ -12,6 +12,7 @@ data class Order (
     val price: String ="",
     val customerOrderid: String ="",
     val orderId: String ="",
+    val cnt: Int =0,
     val bookTime: String ="",
     val completeTime: String ="",
     val status: String =""

@@ -63,7 +63,7 @@ class OrdersAdapter @Inject constructor(
           //  glide.load(post.profilePictureUrl).into(ivPostImage)
             tvPostAuthor.text = post.code
 
-            var tt = "${post.bookTime}   |   3 items   |   ${post.price}"
+            var tt = "${post.bookTime}    | ${post.cnt.toString() +" items"}   |   ${post.price}"
             when (post.status) {
                 "Pending" -> {
                     binding.img.setBackgroundColor(Color.parseColor("#0000FF"))
